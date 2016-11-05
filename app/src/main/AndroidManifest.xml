@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.sap.josh0207.sap2016">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher1"
+        android:supportsRtl="true"
+        android:label="S.A.P"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Who You Are?" />
+        <activity
+            android:name=".BrandLoginActivity"
+            android:label="Merchant Login" />
+        <activity
+            android:name=".BrandRegisterActivity"
+            android:label="Merchant Register" />
+        <activity
+            android:name=".BrandResetPasswordActivity"
+            android:label="Forget Password ?" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:label="About Us" />
+        <activity
+            android:name=".FaqActivity"
+            android:label="Frequent Ask Question" />
+        <activity
+            android:name=".PrivacyPolicyActivity"
+            android:label="Privacy Policy"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".BrandHomeActivity"
+            android:label="My Campaign"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ContactUsActivity"
+            android:label="Contact Us"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".InfHomeActivity"
+            android:label="@string/title_activity_inf_home"
+            android:theme="@style/AppTheme" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
+    </application>
+
+</manifest>

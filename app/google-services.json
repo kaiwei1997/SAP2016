@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "499917407267",
+    "firebase_url": "https://sap2016-146709.firebaseio.com",
+    "project_id": "sap2016-146709",
+    "storage_bucket": "sap2016-146709.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499917407267:android:ba37bfaca3899cbf",
+        "android_client_info": {
+          "package_name": "com.sap.josh0207.sap2016"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499917407267-9ne1hd5f6cru33g3kj4422ed97pocv2j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQJaaETHDkMbdlFIA7bzS4of9gMQ11_kY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
