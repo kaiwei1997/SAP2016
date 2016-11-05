@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -33,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sap.josh0207.sap2016.fragment.BrandAddCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.BrandCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.BrandNotificationsFragment;
 import com.sap.josh0207.sap2016.fragment.BrandSettingsFragment;
@@ -159,25 +161,6 @@ public class BrandHomeActivity extends AppCompatActivity {
             return;
         }
 
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // update the main content by replacing fragments
-                Fragment fragment = getHomeFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                        android.R.anim.fade_out);
-                fragmentTransaction.replace(R.id.frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
-            }
-        };
-
-
-
         //Closing drawer on item click
         drawer.closeDrawers();
 
@@ -185,24 +168,6 @@ public class BrandHomeActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
-    private Fragment getHomeFragment() {
-        switch (navItemIndex) {
-            case 0:
-                // home
-                BrandCampaignFragment campaignFragment = new BrandCampaignFragment();
-                return campaignFragment;
-            case 1:
-                // notificatons
-                BrandNotificationsFragment notificationsFragment = new BrandNotificationsFragment();
-                return notificationsFragment;
-            case 2:
-                // settings
-                BrandSettingsFragment settingsFragment = new BrandSettingsFragment();
-                return settingsFragment;
-            default:
-                return new BrandCampaignFragment();
-        }
-    }
 
     private void setToolbarTitle() {
         getSupportActionBar().setTitle(activityTitles[navItemIndex]);
@@ -226,14 +191,25 @@ public class BrandHomeActivity extends AppCompatActivity {
                     case R.id.nav_BrandMyCampaign:
                         navItemIndex = 0;
                         CURRENT_TAG = TAG_CAMPAIGN;
+                        BrandCampaignFragment campaign = new BrandCampaignFragment();
+                        FragmentManager manager_campaign = getSupportFragmentManager();
+                        manager_campaign.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).
+                                replace(R.id.content_brand__home,campaign,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_BrandNotifications:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
+                        BrandNotificationsFragment notifications = new BrandNotificationsFragment();
+                        FragmentManager manager_notifications = getSupportFragmentManager();
+                        manager_notifications.beginTransaction().setCustomAnimations(android.R.anim.fade_in,
+                                android.R.anim.fade_out).replace(R.id.content_brand__home,notifications,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_BrandSettings:
                         navItemIndex = 2;
                         CURRENT_TAG = TAG_SETTINGS;
+                        BrandSettingsFragment settings = new BrandSettingsFragment();
+                        FragmentManager manager_settings = getSupportFragmentManager();
+                        manager_settings.beginTransaction().replace(R.id.content_brand__home,settings,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_AboutUs:
                         // launch new intent instead of loading fragment
@@ -347,6 +323,16 @@ public class BrandHomeActivity extends AppCompatActivity {
 
             builder.show();
 
+            return true;
+        }
+
+        if(id == R.id.nav_BrandAddCampaign){
+            BrandAddCampaignFragment fr = new BrandAddCampaignFragment();
+            FragmentManager manager = getSupportFragmentManager();
+            manager.beginTransaction().setCustomAnimations(android.R.anim.fade_in,
+                    android.R.anim.fade_out).replace(R.id.content_brand__home,fr,CURRENT_TAG).commit();
+
+            getSupportActionBar().setTitle("Add Campaign");
             return true;
         }
 
