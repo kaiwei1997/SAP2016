@@ -33,15 +33,16 @@
             android:layout_marginTop="60dp"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:srcCompat="@drawable/user_profile_default"
             android:id="@+id/setting_merchant_profile_pic"
             android:foregroundGravity="center"
             android:layout_marginLeft="140dp"
             android:clickable="true"
             android:saveEnabled="true"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:scaleType="centerCrop" />
 
         <TextView
             android:text="Name"
@@ -51,7 +52,7 @@
             android:gravity="center"
             android:textSize="16dp"
             android:textColor="#000000"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="82dp"
             android:layout_marginLeft="120dp"/>
 
         <TextView
@@ -81,16 +82,16 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="115dp">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="115dp">
+            android:layout_alignParentStart="true">
 
             <ListView
                 android:layout_width="match_parent"

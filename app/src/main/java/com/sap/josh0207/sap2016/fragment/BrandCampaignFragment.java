@@ -18,9 +18,10 @@ public class BrandCampaignFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand_campaign, container, false);
+
         //Load AdMob
         MobileAds.initialize(getActivity(),"ca-app-pub-4516935382926964~7526464337");
-        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdView mAdView = (AdView) view.findViewById(R.id.adView1);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
