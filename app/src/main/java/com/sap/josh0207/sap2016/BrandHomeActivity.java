@@ -66,8 +66,6 @@ public class BrandHomeActivity extends AppCompatActivity {
 
     // flag to load home fragment when user presses back key
     private boolean LoadHomeFragOnBackPress = true;
-    private Handler mHandler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -18,6 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.sap.josh0207.sap2016.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -30,6 +37,10 @@ import static android.app.Activity.RESULT_OK;
 
 public class BrandSettingsFragment extends Fragment {
     private ImageButton setting_profile_pic;
+    private TextView merchant_name;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference mdatabase;
 
     private static final int GALLERY_REQUEST = 1;
 
@@ -43,6 +54,7 @@ public class BrandSettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_brand_settings,container,false);
 
         setting_profile_pic = (ImageButton)view.findViewById(R.id.setting_merchant_profile_pic);
+        merchant_name = (TextView)view.findViewById(R.id.setting_merchant_name);
 
         //ListView
         ListView listView = (ListView)view.findViewById(R.id.setting_listView);
@@ -56,7 +68,28 @@ public class BrandSettingsFragment extends Fragment {
 
         listView.setAdapter(listAdapter);
 
+        //Merchant name
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser merchant = mAuth.getCurrentUser();
 
+        String uid = merchant.getUid();
+
+        //Load merchant first name and company name
+        mdatabase = FirebaseDatabase.getInstance().getReference().child("Merchant");
+        DatabaseReference current_user_first_name = mdatabase.child(uid).child("first_name");
+
+        current_user_first_name.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String first_name = dataSnapshot.getValue(String.class);
+                merchant_name.setText(first_name);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         setting_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
