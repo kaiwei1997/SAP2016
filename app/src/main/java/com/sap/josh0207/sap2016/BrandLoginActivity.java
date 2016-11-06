@@ -30,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class BrandLoginActivity extends Activity {
 
-    private TextView linkToRegister,ForgetPass;
+    private TextView linkToRegister,ForgetPass,linkToHome;
     private Button btn_login;
     private EditText email, password;
 
@@ -52,6 +52,7 @@ public class BrandLoginActivity extends Activity {
 
 
         linkToRegister = (TextView) findViewById(R.id.link_to_register);
+        linkToHome = (TextView)findViewById(R.id.link_to_home);
         btn_login = (Button) findViewById(R.id.btn_Login);
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_pass);
@@ -74,6 +75,17 @@ public class BrandLoginActivity extends Activity {
                 finish();
             }
         });
+
+        //Link to Homepage
+        linkToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+                finish();;
+            }
+        });
+
         // Login Button Event
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,6 +3,8 @@
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="btn_back"><![CDATA[<< Back]]></string>
 
+    <string name="banner_ad_unit_id">ca-app-pub-4516935382926964/7134244334</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="openDrawer">open_drawer</string>
