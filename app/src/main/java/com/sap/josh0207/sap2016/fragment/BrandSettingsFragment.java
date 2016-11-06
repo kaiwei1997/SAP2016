@@ -44,8 +44,6 @@ public class BrandSettingsFragment extends Fragment {
 
     private static final int GALLERY_REQUEST = 1;
 
-
-
     private ArrayAdapter<String> listAdapter;
 
     @Override
