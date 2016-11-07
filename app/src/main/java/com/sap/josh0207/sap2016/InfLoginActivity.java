@@ -65,7 +65,7 @@ public class InfLoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         // [END initialize_auth]
 
-        mdatabase = FirebaseDatabase.getInstance().getReference().child("Other");
+        mdatabase = FirebaseDatabase.getInstance().getReference().child("Influencer");
 
         if(mAuth.getCurrentUser()!=null){
             startActivity(new Intent(getApplicationContext(), InfHomeActivity.class));
@@ -96,8 +96,6 @@ public class InfLoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
-                startActivity(new Intent(getApplicationContext(), InfHomeActivity.class));
-                finish();
             }
 
             @Override
@@ -155,9 +153,11 @@ public class InfLoginActivity extends AppCompatActivity {
 
                         DatabaseReference current_user_db = mdatabase.child(userId);
 
-                        current_user_db.child("first_name").setValue(mAuth.getCurrentUser().getDisplayName());
-                        current_user_db.child("last_name").setValue("");
-                        current_user_db.child("contact_no").setValue("");
+                        current_user_db.child("facebook_name").setValue(mAuth.getCurrentUser().getDisplayName());
+                        current_user_db.child("contact_no").setValue(null);
+
+                        startActivity(new Intent(getApplicationContext(), InfHomeActivity.class));
+                        finish();
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the

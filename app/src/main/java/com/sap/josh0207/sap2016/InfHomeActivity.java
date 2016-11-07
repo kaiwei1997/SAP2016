@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,16 +32,18 @@ import com.google.firebase.database.ValueEventListener;
 import com.sap.josh0207.sap2016.fragment.InfCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.InfNotificationsFragment;
 import com.sap.josh0207.sap2016.fragment.InfSettingsFragment;
+import com.squareup.picasso.Picasso;
 
 public class InfHomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private DatabaseReference mdatabase;
     private View nvHeader;
-    private TextView infEmail, infName;
-    private ImageView profile;
+    private TextView infName;
+    private ImageView profilePicture;
     private NavigationView navigationView;
     private DrawerLayout drawer ;
     private Toolbar toolbar;
+    private String facebookUserId = "";
+    private FirebaseUser user;
 
     // index to identify current nav menu item
     public static int navItemIndex = 0;
@@ -85,8 +88,6 @@ public class InfHomeActivity extends AppCompatActivity {
 
         //Navigation Header
         nvHeader = navigationView.getHeaderView(0);
-        profile = (ImageView) nvHeader.findViewById(R.id.inf_img_profile);
-        infEmail = (TextView) nvHeader.findViewById(R.id.tv_InfEmail);
         infName = (TextView) nvHeader.findViewById(R.id.tv_InfName);
 
         // load toolbar titles from string resources
@@ -98,11 +99,23 @@ public class InfHomeActivity extends AppCompatActivity {
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
+        //set Navigation header Influencer Profile Pic from FB
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        for(UserInfo profile: user.getProviderData()){
+            //check is it the provider id matches "facebok.com"
+            if(profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
+                facebookUserId = profile.getUid();
+            }
+        }
+
+        //construct the URL to the profile picture, with a custom height
+        String photoUrl = "https://graph.facebook.com/" + facebookUserId + "/picture?height=500";
+
+        //Picasso download and show to image
+        Picasso.with(this).load(photoUrl).into(profilePicture);
+
+        //set Navigation header Influencer Name
         infName.setText("Welcome, " + mAuth.getCurrentUser().getDisplayName());
-
-        //set Navigation header email
-
-        infEmail.setText(mAuth.getCurrentUser().getEmail());
 
         //Initializing navigation menu
         setUpNavigationView();
@@ -289,7 +302,8 @@ public class InfHomeActivity extends AppCompatActivity {
                 }
             });
 
-            builder.show();
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
 
             return true;
         }

@@ -114,7 +114,7 @@ public class BrandHomeActivity extends AppCompatActivity {
         FirebaseUser merchant = mAuth.getCurrentUser();
         String uid = merchant.getUid();
 
-        //Load merchant first name and company name
+        //Load merchant first name
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Merchant");
         DatabaseReference current_user_first_name = mdatabase.child(uid).child("first_name");
 
