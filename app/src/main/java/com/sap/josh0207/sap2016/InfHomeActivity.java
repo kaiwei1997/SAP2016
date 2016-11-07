@@ -298,7 +298,6 @@ public class InfHomeActivity extends AppCompatActivity {
                     dialog.dismiss();
                     mAuth.signOut();
                     LoginManager.getInstance().logOut();
-                    Toast.makeText(getApplicationContext(),"User Logout",Toast.LENGTH_LONG).show();
                     finish();
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 }

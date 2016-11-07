@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -313,7 +314,7 @@ public class BrandHomeActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                     mAuth.signOut();
-                    Toast.makeText(getApplicationContext(),"User Logout",Toast.LENGTH_LONG).show();
+                    LoginManager.getInstance().logOut();
                     finish();
                     startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 }
