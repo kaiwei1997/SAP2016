@@ -301,16 +301,12 @@ public class BrandHomeActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BrandHomeActivity.this);
-            builder.setTitle("Logout");
-            builder.setMessage("Are You Sure Want To Logout?")
-                    .setCancelable(false);
-            builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
-            builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(BrandHomeActivity.this);
+            dialog.setCancelable(false);
+            dialog.setTitle("Logout");
+            dialog.setMessage("Are You Sure Want To Logout?");
+
+            dialog.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                     mAuth.signOut();
@@ -320,8 +316,12 @@ public class BrandHomeActivity extends AppCompatActivity {
                 }
             });
 
-            builder.show();
-
+            dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+            dialog.show();
             return true;
         }
 
