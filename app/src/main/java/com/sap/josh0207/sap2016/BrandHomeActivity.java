@@ -3,6 +3,7 @@ package com.sap.josh0207.sap2016;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;

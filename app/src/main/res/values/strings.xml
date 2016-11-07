@@ -4,7 +4,7 @@
     <string name="btn_back"><![CDATA[<< Back]]></string>
 
     <string name="facebook_app_id">677246852429690</string>
-    
+
     <string name="facebook_provider_id">facebook.com</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-4516935382926964/7134244334</string>
@@ -40,7 +40,4 @@
     <string name="title_activity_inf_home">InfHomeActivity</string>
 
     <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

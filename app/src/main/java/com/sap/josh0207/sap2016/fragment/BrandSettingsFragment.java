@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -63,6 +66,30 @@ public class BrandSettingsFragment extends Fragment {
         listAdapter = new ArrayAdapter<String>(getActivity(),R.layout.simple_row,choiceList);
 
         listView.setAdapter(listAdapter);
+
+        //set onClickListener for list view
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        Toast.makeText(getActivity(),"0",Toast.LENGTH_SHORT).show();
+                        BrandDetailFragment detailFragment = new BrandDetailFragment();
+                        FragmentManager detailManager = getActivity().getSupportFragmentManager();
+                        detailManager.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                        .replace(R.id.BrandSettings,detailFragment).commit();
+                        break;
+
+                    case 1:
+
+                        break;
+
+                    default:
+
+                        break;
+                }
+            }
+        });
 
         //Merchant
         mAuth = FirebaseAuth.getInstance();

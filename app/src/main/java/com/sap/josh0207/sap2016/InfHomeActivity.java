@@ -284,12 +284,12 @@ public class InfHomeActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(InfHomeActivity.this);
-            dialog.setCancelable(false);
-            dialog.setTitle("Logout");
-            dialog.setMessage("Are You Sure Want To Logout?");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("Logout");
+            builder.setMessage("Are You Sure Want To Logout?");
 
-            dialog.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                     mAuth.signOut();
@@ -299,12 +299,13 @@ public class InfHomeActivity extends AppCompatActivity {
                 }
             });
 
-            dialog.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("No",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.cancel();
                 }
             });
-            dialog.show();
+            AlertDialog alert = builder.create();
+            alert.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
