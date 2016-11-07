@@ -111,7 +111,7 @@ public class InfHomeActivity extends AppCompatActivity {
         }
 
         //construct the URL to the profile picture, with a custom height
-        String photoUrl = "https://graph.facebook.com/" + facebookUserId + "/picture?height=500";
+        String photoUrl = "https://graph.facebook.com/" + facebookUserId + "/picture?height=800";
 
         //Picasso download and show to image
         Picasso.with(this).load(photoUrl).into(profilePicture);
@@ -271,7 +271,7 @@ public class InfHomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.brand__home_, menu);
+        getMenuInflater().inflate(R.menu.inf_home, menu);
         return true;
     }
 
