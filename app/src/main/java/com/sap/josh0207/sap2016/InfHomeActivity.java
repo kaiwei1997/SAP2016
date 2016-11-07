@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -89,6 +90,7 @@ public class InfHomeActivity extends AppCompatActivity {
         //Navigation Header
         nvHeader = navigationView.getHeaderView(0);
         infName = (TextView) nvHeader.findViewById(R.id.tv_InfName);
+        profilePicture = (ImageView)nvHeader.findViewById(R.id.inf_img_profile);
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);

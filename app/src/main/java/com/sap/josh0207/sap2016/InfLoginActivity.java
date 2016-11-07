@@ -70,9 +70,8 @@ public class InfLoginActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null){
             startActivity(new Intent(getApplicationContext(), InfHomeActivity.class));
             finish();
-        }else if(mAuth.getCurrentUser()==null){
-            startActivity(new Intent(getApplicationContext(),InfLoginActivity.class));
         }
+
         // [START auth_state_listener]
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
