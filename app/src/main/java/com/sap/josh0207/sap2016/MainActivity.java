@@ -45,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Button infLogin = (Button)findViewById(R.id.btn_influencer);
+
+        infLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),InfLoginActivity.class);
+                startActivity(i);
+            }
+        });
     }
 }
 

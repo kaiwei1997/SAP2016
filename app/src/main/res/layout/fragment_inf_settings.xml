@@ -1,10 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sap.josh0207.sap2016.fragment.BrandNotificationsFragment">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.sap.josh0207.sap2016.fragment.InfSettingsFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -12,7 +11,7 @@
         android:background="@drawable/gradient_black">
 
         <TextView
-            android:text="Active\nCampaign"
+            android:text="Follower"
             android:layout_width="133dp"
             android:layout_height="45dp"
             android:id="@+id/setting_merchant_campaign"
@@ -46,7 +45,7 @@
             android:layout_marginTop="2dp"/>
 
         <TextView
-            android:text="Paid\nAmount"
+            android:text="Revenue"
             android:layout_width="133dp"
             android:layout_height="45dp"
             android:id="@+id/setting_merchant_paid"
@@ -88,6 +87,7 @@
                 android:layout_height="513dp"
                 android:id="@+id/setting_listView">
             </ListView>
-            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>

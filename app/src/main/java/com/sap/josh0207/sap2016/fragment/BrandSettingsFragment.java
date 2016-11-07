@@ -37,7 +37,6 @@ import static android.app.Activity.RESULT_OK;
 
 public class BrandSettingsFragment extends Fragment {
     private ImageButton setting_profile_pic;
-    private TextView merchant_name;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mdatabase;
@@ -52,7 +51,6 @@ public class BrandSettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_brand_settings,container,false);
 
         setting_profile_pic = (ImageButton)view.findViewById(R.id.setting_merchant_profile_pic);
-        merchant_name = (TextView)view.findViewById(R.id.setting_merchant_name);
 
         //ListView
         ListView listView = (ListView)view.findViewById(R.id.setting_listView);
@@ -66,28 +64,11 @@ public class BrandSettingsFragment extends Fragment {
 
         listView.setAdapter(listAdapter);
 
-        //Merchant name
+        //Merchant
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser merchant = mAuth.getCurrentUser();
 
         String uid = merchant.getUid();
-
-        //Load merchant first name and company name
-        mdatabase = FirebaseDatabase.getInstance().getReference().child("Merchant");
-        DatabaseReference current_user_first_name = mdatabase.child(uid).child("first_name");
-
-        current_user_first_name.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String first_name = dataSnapshot.getValue(String.class);
-                merchant_name.setText(first_name);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         setting_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
