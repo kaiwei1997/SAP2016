@@ -3,14 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sap.josh0207.sap2016.fragment.BrandNotificationsFragment">
+    android:id="@+id/brand_settings"
+    tools:context="com.sap.josh0207.sap2016.fragment.BrandSettingsFragment">
 
 
-    <FrameLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="107dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="486dp"
+                android:id="@+id/setting_listView"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_black">
-
         <TextView
             android:text="Active\nCampaign"
             android:layout_width="133dp"
@@ -46,18 +64,6 @@
             android:layout_marginTop="2dp"/>
 
         <TextView
-            android:text="Paid\nAmount"
-            android:layout_width="133dp"
-            android:layout_height="45dp"
-            android:id="@+id/setting_merchant_paid"
-            android:gravity="center"
-            android:textSize="15dp"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="235dp"/>
-
-        <TextView
             android:text="Total"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
@@ -68,27 +74,20 @@
             android:layout_marginTop="60dp"
             android:layout_marginLeft="235dp"/>
 
-    </FrameLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="115dp">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/BrandSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true">
-
-            <ListView
-                android:layout_width="match_parent"
-                android:layout_height="513dp"
-                android:id="@+id/setting_listView">
-            </ListView>
-            </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:text="Paid\nAmount"
+            android:layout_width="133dp"
+            android:layout_height="45dp"
+            android:id="@+id/setting_merchant_paid"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginLeft="235dp"
+            android:layout_alignBaseline="@+id/setting_merchant_campaign"
+            android:layout_alignBottom="@+id/setting_merchant_campaign"
+            android:layout_alignEnd="@+id/settings_total_paid" />
+    </RelativeLayout>
 </RelativeLayout>
+
+

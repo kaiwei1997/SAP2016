@@ -86,7 +86,6 @@ public class InfHomeActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), InfLoginActivity.class));
         }
 
-
         //Navigation Header
         nvHeader = navigationView.getHeaderView(0);
         infName = (TextView) nvHeader.findViewById(R.id.tv_InfName);

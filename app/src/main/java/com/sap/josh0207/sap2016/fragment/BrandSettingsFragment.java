@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sap.josh0207.sap2016.BrandDetailActivity;
+import com.sap.josh0207.sap2016.InfLoginActivity;
 import com.sap.josh0207.sap2016.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -53,6 +55,7 @@ public class BrandSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_brand_settings,container,false);
 
+
         setting_profile_pic = (ImageButton)view.findViewById(R.id.setting_merchant_profile_pic);
 
         //ListView
@@ -73,11 +76,8 @@ public class BrandSettingsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        Toast.makeText(getActivity(),"0",Toast.LENGTH_SHORT).show();
-                        BrandDetailFragment detailFragment = new BrandDetailFragment();
-                        FragmentManager detailManager = getActivity().getSupportFragmentManager();
-                        detailManager.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
-                        .replace(R.id.BrandSettings,detailFragment).commit();
+                        Intent i = new Intent(getActivity().getApplicationContext(), BrandDetailActivity.class);
+                        startActivity(i);
                         break;
 
                     case 1:
