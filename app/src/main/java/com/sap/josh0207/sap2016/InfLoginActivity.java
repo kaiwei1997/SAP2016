@@ -82,7 +82,7 @@ public class InfLoginActivity extends AppCompatActivity {
                             Intent i = new Intent(getApplicationContext(),InfHomeActivity.class);
                             startActivity(i);
                         }
-                        if(!profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
+                        else if(!profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
                             mAuth.signOut();
                             LoginManager.getInstance().logOut();
                         }
