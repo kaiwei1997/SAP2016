@@ -29,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -67,19 +68,25 @@ public class InfLoginActivity extends AppCompatActivity {
 
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Influencer");
 
-        if(mAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getApplicationContext(), InfHomeActivity.class));
-            finish();
-        }
-
         // [START auth_state_listener]
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                if (user != null ) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    for(UserInfo profile: user.getProviderData()){
+                        //check is it the provider id matches "facebok.com"
+                        if(profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
+                            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                            Intent i = new Intent(getApplicationContext(),InfHomeActivity.class);
+                            startActivity(i);
+                        }
+                        if(!profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
+                            mAuth.signOut();
+                            LoginManager.getInstance().logOut();
+                        }
+                    }
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");

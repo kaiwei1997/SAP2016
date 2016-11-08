@@ -31,15 +31,13 @@
             android:gravity="center"
             android:layout_marginTop="60dp"/>
 
-        <ImageButton
+        <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:srcCompat="@drawable/user_profile_default"
-            android:id="@+id/setting_merchant_profile_pic"
+            android:id="@+id/setting_inf_profile_pic"
             android:foregroundGravity="center"
             android:layout_marginLeft="140dp"
-            android:clickable="true"
-            android:saveEnabled="true"
             android:visibility="visible"
             android:scaleType="centerCrop"
             android:layout_marginTop="2dp"/>

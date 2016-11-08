@@ -39,7 +39,7 @@ public class InfHomeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private View nvHeader;
     private TextView infName;
-    private ImageView profilePicture;
+    private ImageView profilePicture,setting_profile_pic;
     private NavigationView navigationView;
     private DrawerLayout drawer ;
     private Toolbar toolbar;
@@ -114,6 +114,10 @@ public class InfHomeActivity extends AppCompatActivity {
 
         //Picasso download and show to image
         Picasso.with(this).load(photoUrl).into(profilePicture);
+
+        //Picasso download and show to image (Setting fragment)
+        setting_profile_pic = (ImageView)findViewById(R.id.setting_inf_profile_pic);
+
 
         //set Navigation header Influencer Name
         infName.setText("Welcome, " + mAuth.getCurrentUser().getDisplayName());
