@@ -82,10 +82,6 @@ public class InfLoginActivity extends AppCompatActivity {
                             Intent i = new Intent(getApplicationContext(),InfHomeActivity.class);
                             startActivity(i);
                         }
-                        else if(!profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
-                            mAuth.signOut();
-                            LoginManager.getInstance().logOut();
-                        }
                     }
                 } else {
                     // User is signed out
@@ -94,11 +90,12 @@ public class InfLoginActivity extends AppCompatActivity {
             }
         };
         // [END auth_state_listener]
+
         // [START initialize_fblogin]
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.button_facebook_login);
-        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setReadPermissions("email", "public_profile","user_friends","user_posts");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

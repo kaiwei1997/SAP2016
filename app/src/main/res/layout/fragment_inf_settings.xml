@@ -14,7 +14,7 @@
             android:text="Follower"
             android:layout_width="133dp"
             android:layout_height="45dp"
-            android:id="@+id/setting_merchant_campaign"
+            android:id="@+id/settings_inf_follower"
             android:gravity="center"
             android:textSize="15dp"
             android:textColor="#000000"
@@ -25,7 +25,7 @@
             android:text="Total"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
-            android:id="@+id/settings_number_of_active_campaign"
+            android:id="@+id/settings_number_of_follower"
             android:textColor="#000000"
             android:textSize="16dp"
             android:gravity="center"
@@ -46,7 +46,7 @@
             android:text="Revenue"
             android:layout_width="133dp"
             android:layout_height="45dp"
-            android:id="@+id/setting_merchant_paid"
+            android:id="@+id/setting_inf_revenue"
             android:gravity="center"
             android:textSize="15dp"
             android:textColor="#000000"
@@ -58,7 +58,7 @@
             android:text="Total"
             android:layout_width="124dp"
             android:layout_height="wrap_content"
-            android:id="@+id/settings_total_paid"
+            android:id="@+id/settings_total_revenue"
             android:textColor="#000000"
             android:textSize="16dp"
             android:gravity="center"
@@ -83,7 +83,7 @@
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="513dp"
-                android:id="@+id/setting_listView">
+                android:id="@+id/inf_setting_listView">
             </ListView>
         </LinearLayout>
     </ScrollView>
