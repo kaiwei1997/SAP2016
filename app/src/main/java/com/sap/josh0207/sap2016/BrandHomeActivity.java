@@ -36,10 +36,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sap.josh0207.sap2016.fragment.BrandAddCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.BrandCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.BrandNotificationsFragment;
 import com.sap.josh0207.sap2016.fragment.BrandSettingsFragment;
+import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 
@@ -91,11 +91,12 @@ public class BrandHomeActivity extends AppCompatActivity {
         //Firebase start checking user login
         mAuth = FirebaseAuth.getInstance();
 
+        mdatabase = FirebaseDatabase.getInstance().getReference().child("Merchant");
+
         if (mAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(getApplicationContext(), BrandLoginActivity.class));
         }
-
 
         //Navigation Header
         nvHeader = navigationView.getHeaderView(0);
@@ -116,8 +117,25 @@ public class BrandHomeActivity extends AppCompatActivity {
         FirebaseUser merchant = mAuth.getCurrentUser();
         String uid = merchant.getUid();
 
+        //Load merchant profile
+        DatabaseReference current_merchant_pic = mdatabase.child(uid).child("image");
+
+        current_merchant_pic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String URL = dataSnapshot.getValue(String.class);
+                if(URL!=null) {
+                    Picasso.with(getApplicationContext()).load(URL).into(profile);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         //Load merchant first name
-        mdatabase = FirebaseDatabase.getInstance().getReference().child("Merchant");
         DatabaseReference current_user_first_name = mdatabase.child(uid).child("first_name");
 
         current_user_first_name.addValueEventListener(new ValueEventListener() {
@@ -327,12 +345,8 @@ public class BrandHomeActivity extends AppCompatActivity {
         }
 
         if(id == R.id.nav_BrandAddCampaign){
-            BrandAddCampaignFragment fr = new BrandAddCampaignFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            manager.beginTransaction().setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out).replace(R.id.content_brand__home,fr,CURRENT_TAG).commit();
-
-            getSupportActionBar().setTitle("Add Campaign");
+            Intent i = new Intent(getApplicationContext(),AddCampaignActivity.class);
+            startActivity(i);
             return true;
         }
 

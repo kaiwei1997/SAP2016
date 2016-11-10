@@ -43,8 +43,7 @@
         <activity
             android:name=".PrivacyPolicyActivity"
             android:label="Privacy Policy"
-            android:theme="@style/AppTheme"
-             />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".BrandHomeActivity"
             android:label="My Campaign"
@@ -66,7 +65,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".BrandDetailActivity"></activity>
+        <activity android:name=".BrandDetailActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".AddCampaignActivity"></activity>
     </application>
 
 </manifest>
