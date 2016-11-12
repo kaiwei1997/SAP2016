@@ -38,7 +38,7 @@
                android:layout_width="match_parent"
                android:layout_height="290dp"
                app:srcCompat="@drawable/btn_add_image"
-               android:id="@+id/btn_hero_image"
+               android:id="@+id/btn_logo_image"
                android:scaleType="centerCrop"/>
 
            <TextView
@@ -51,10 +51,192 @@
 
            <ImageButton
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"
+               android:layout_height="290dp"
                app:srcCompat="@drawable/btn_add_image"
-               android:id="@+id/btn_logo_image"
+               android:id="@+id/btn_hero_image"
                android:scaleType="centerCrop"/>
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Brand Name"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:id="@+id/et_brand_name"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:paddingLeft="5dp"
+               android:paddingTop="5dp"
+               android:textSize="16dp"
+               android:textColor="#000" />
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Campaign or Product Name"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:id="@+id/et_campaign_name"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:paddingLeft="5dp"
+               android:paddingTop="5dp"
+               android:textSize="16dp"
+               android:textColor="#000" />
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Product Description"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:inputType="textMultiLine"
+               android:ems="10"
+               android:id="@+id/et_product_desc"
+               android:textColor="#000"
+               android:textSize="16dp"
+               android:paddingTop="5dp"
+               android:paddingLeft="5dp"/>
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Product Category"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <Spinner
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:id="@+id/category_spinner"
+               android:background="@drawable/et_shape_black"/>
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Product Link"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:id="@+id/et_product_link"
+               android:inputType="textUri"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:paddingLeft="5dp"
+               android:paddingTop="5dp"
+               android:textSize="16dp"
+               android:textColor="#000" />
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Where to Get Product"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:inputType="textMultiLine"
+               android:ems="10"
+               android:id="@+id/et_get_product"
+               android:textColor="#000"
+               android:textSize="16dp"
+               android:paddingTop="5dp"
+               android:paddingLeft="5dp"/>
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Content WE'D Love From You"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:inputType="textMultiLine"
+               android:ems="10"
+               android:id="@+id/et_content"
+               android:textColor="#000"
+               android:textSize="16dp"
+               android:paddingTop="5dp"
+               android:paddingLeft="5dp"/>
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Call To Action"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:id="@+id/et_action"
+               android:hint="Submit Posts to/for"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:paddingLeft="5dp"
+               android:paddingTop="5dp"
+               android:textSize="16dp"
+               android:textColor="#000" />
+
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="Term And Condition for Publishing"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
+           <EditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/et_shape_black"
+               android:inputType="textMultiLine"
+               android:ems="10"
+               android:id="@+id/et_tC"
+               android:textColor="#000"
+               android:textSize="16dp"
+               android:paddingTop="5dp"
+               android:paddingLeft="5dp"/>
+
+           <Button
+               android:id="@+id/btn_submit"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="SUBMIT"
+               android:textColor="#000"
+               android:background="@drawable/et_shape_black"
+               android:paddingTop="5dp"
+               android:paddingLeft="5dp"
+               android:paddingRight="5dp"
+               android:paddingBottom="5dp"
+               android:layout_marginTop="8dp"/>
+
        </LinearLayout>
     </ScrollView>
 

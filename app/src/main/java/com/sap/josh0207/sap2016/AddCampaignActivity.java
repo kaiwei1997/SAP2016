@@ -2,6 +2,7 @@ package com.sap.josh0207.sap2016;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,12 +18,28 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.facebook.internal.Utility;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageOptions;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
@@ -30,6 +47,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.security.AccessController.getContext;
 
@@ -38,9 +57,30 @@ public class AddCampaignActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA = 1;
     private static final int GALLERY_REQUEST = 2;
+    private static final int LOGO_GALLERY_REQUEST = 3;
 
     private Uri Image_hero = null;
     private Uri Image_logo = null;
+
+    private Spinner category;
+
+    private EditText brandName,campaignName,desc,link,getProduct,content,action,tc;
+
+    private Button submit;
+
+    private FirebaseAuth mAuth;
+
+    private DatabaseReference mdatabase;
+
+    private StorageReference mImage;
+
+    private ProgressDialog mProgress;
+
+    private String heroDownloadUri,logoDownloadUri;
+
+    private String uid;
+
+    List<String> list_category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +94,77 @@ public class AddCampaignActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Add Campaign");
 
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser Merchant = mAuth.getCurrentUser();
+        uid = Merchant.getUid();
+
+        mProgress = new ProgressDialog(this);
+
+        mdatabase = FirebaseDatabase.getInstance().getReference().child("Campaign");
+
+        mImage = FirebaseStorage.getInstance().getReference();
+
         heroImage = (ImageButton)findViewById(R.id.btn_hero_image);
         BrandLogo = (ImageButton)findViewById(R.id.btn_logo_image);
+
+        submit = (Button)findViewById(R.id.btn_submit);
+
+        category = (Spinner)findViewById(R.id.category_spinner);
+
+        list_category = new ArrayList<String>();
+        list_category.add("Animals");
+        list_category.add("Automotive");
+        list_category.add("Beauty & Personal Care");
+        list_category.add("Business,Finance & Insurance");
+        list_category.add("Children & Family");
+        list_category.add("Education & Book");
+        list_category.add("Entertainment & Events");
+        list_category.add("Fashion");
+        list_category.add("Food & Drinks");
+        list_category.add("Health, Fitness & Sport");
+        list_category.add("Home & Garden");
+        list_category.add("Photography, Arts & Design");
+        list_category.add("Restaurant, Bars & Hotel");
+        list_category.add("Social Enterprise & Not-for-Profit");
+        list_category.add("Social Media, Web, Tech");
+        list_category.add("Travel & Destinations");
+
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,list_category);
+
+        category.setAdapter(adp);
+
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String category_selected = category.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
 
         heroImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectImage();
+            }
+        });
+
+        BrandLogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryIntent1();
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                addCampaign();
             }
         });
     }
@@ -101,6 +204,13 @@ public class AddCampaignActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select File"),GALLERY_REQUEST);
     }
 
+    private void galleryIntent1(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"),LOGO_GALLERY_REQUEST);
+    }
+
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -108,7 +218,7 @@ public class AddCampaignActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == GALLERY_REQUEST) {
                 Image_hero = data.getData();
-                CropImage.activity(Image_hero).setGuidelines(CropImageView.Guidelines.ON).start(this);
+                heroImage.setImageURI(Image_hero);
 
             }else if(requestCode == REQUEST_CAMERA){
                 Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
@@ -116,8 +226,6 @@ public class AddCampaignActivity extends AppCompatActivity {
                 thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
                 File destination = new File(Environment.getExternalStorageDirectory(),
                         System.currentTimeMillis() + ".jpg");
-                Uri uri = Uri.fromFile(destination);
-                CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).start(this);
                 FileOutputStream fo;
                 try {
                     destination.createNewFile();
@@ -129,19 +237,11 @@ public class AddCampaignActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-                if (resultCode == RESULT_OK) {
-
-                    Image_hero = result.getUri();
-
-                    heroImage.setImageURI(Image_hero);
-
-                }
+                Image_hero = Uri.parse(destination.getAbsolutePath());
+                heroImage.setImageURI(Image_hero);
+            }else if(requestCode == LOGO_GALLERY_REQUEST){
+                Image_logo = data.getData();
+                BrandLogo.setImageURI(Image_logo);
             }
         }
     }
@@ -155,6 +255,81 @@ public class AddCampaignActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addCampaign(){
+        brandName = (EditText)findViewById(R.id.et_brand_name);
+        campaignName = (EditText)findViewById(R.id.et_campaign_name);
+        desc = (EditText)findViewById(R.id.et_product_desc);
+        link = (EditText)findViewById(R.id.et_product_link);
+        getProduct = (EditText)findViewById(R.id.et_get_product);
+        content = (EditText)findViewById(R.id.et_content);
+        action = (EditText)findViewById(R.id.et_action);
+        tc = (EditText)findViewById(R.id.et_tC);
+
+        final String brand_name = brandName.getText().toString().trim();
+        final String campaign_name  = campaignName.getText().toString().trim();
+        final String description  = desc.getText().toString().trim();
+        final String product_link  = link.getText().toString().trim();
+        final String get_Product  = getProduct.getText().toString().trim();
+        final String get_content = content.getText().toString().trim();
+        final String get_action = action.getText().toString().trim();
+        final String term = tc.getText().toString().trim();
+
+        if(Image_hero==null){
+            Toast.makeText(getApplicationContext(), "Please upload Hero Image", Toast.LENGTH_LONG).show();
+        }
+        else if(Image_logo==null){
+            Toast.makeText(getApplicationContext(), "Please upload Logo Image", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(brand_name)){
+            Toast.makeText(getApplicationContext(), "Please enter Brand Name", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(campaign_name)){
+            Toast.makeText(getApplicationContext(), "Please enter campaign or product name", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(description)){
+            Toast.makeText(getApplicationContext(), "Please enter product description", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(product_link)){
+            Toast.makeText(getApplicationContext(), "Please enter product link", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(get_Product)){
+            Toast.makeText(getApplicationContext(), "Please enter how to get your pruduct", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(get_content)){
+            Toast.makeText(getApplicationContext(), "Please enter how you want the influencer content look like", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(get_action)){
+            Toast.makeText(getApplicationContext(), "Please enter what is the purpose of posts", Toast.LENGTH_LONG).show();
+        }else if(TextUtils.isEmpty(term)){
+            Toast.makeText(getApplicationContext(), "Please enter term and condition for posts", Toast.LENGTH_LONG).show();
+        }else{
+            mProgress.setMessage("Creating Campaign");
+            mProgress.show();
+
+            StorageReference heroFilePath = mImage.child("Campaign").child("HeroImage").child(Image_hero.getLastPathSegment());
+            StorageReference logoFilePath = mImage.child("Campaign").child("LogoImage").child(Image_logo.getLastPathSegment());
+            heroFilePath.putFile(Image_hero).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                     heroDownloadUri = taskSnapshot.getDownloadUrl().toString();
+                }
+            });
+            logoFilePath.putFile(Image_logo).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    logoDownloadUri = taskSnapshot.getDownloadUrl().toString();
+
+                    DatabaseReference newCampaign = mdatabase.push();
+                    newCampaign.child("brand_name").setValue(brand_name);
+                    newCampaign.child("campaign_name").setValue(campaign_name);
+                    newCampaign.child("description").setValue(description);
+                    newCampaign.child("link").setValue(product_link);
+                    newCampaign.child("get_product").setValue(get_Product);
+                    newCampaign.child("content").setValue(get_content);
+                    newCampaign.child("action").setValue(get_action);
+                    newCampaign.child("tc").setValue(term);
+                    newCampaign.child("hero_image").setValue(heroDownloadUri);
+                    newCampaign.child("logo_image").setValue(logoDownloadUri);
+                    newCampaign.child("merchant_id").setValue(uid);
+                }
+            });
+
+        }
     }
 }
 
