@@ -30,7 +30,7 @@ public class SplashActivity extends Activity {
         if (checkConnection) {
             t.schedule(new splash(), 3000);
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
             builder.setMessage("No Internet Connection. Go to Settings?")
                     .setCancelable(false);
             builder.setNegativeButton("Settings",new DialogInterface.OnClickListener() {
