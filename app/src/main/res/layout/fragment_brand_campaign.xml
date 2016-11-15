@@ -5,19 +5,10 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.sap.josh0207.sap2016.fragment.BrandCampaignFragment">
 
-    <ScrollView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/inf_campaign_listView"
-                android:layout_width="match_parent"
-                android:layout_height="460dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/campaign_list"></android.support.v7.widget.RecyclerView>
 
             <com.google.android.gms.ads.AdView
                 android:layout_marginTop="10dp"
@@ -30,6 +21,4 @@
                 ads:adUnitId="@string/banner_ad_unit_id1"
                 android:layout_gravity="center">
             </com.google.android.gms.ads.AdView>
-        </LinearLayout>
-    </ScrollView>
 </RelativeLayout>

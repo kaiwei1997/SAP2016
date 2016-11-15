@@ -43,6 +43,8 @@ import com.squareup.picasso.Picasso;
 
 import java.net.URL;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class BrandHomeActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -352,6 +354,7 @@ public class BrandHomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
 
 
 

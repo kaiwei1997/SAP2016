@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/faq_toolbar"
+        android:id="@+id/add_campaign_toolbar"
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +21,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="5dp">
-
+        android:layout_marginTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp">
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -123,7 +124,8 @@
            <Spinner
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:id="@+id/category_spinner" />
+               android:id="@+id/category_spinner"
+               android:layout_marginTop="5dp" />
 
            <TextView
                android:layout_marginTop="10dp"
@@ -188,20 +190,20 @@
                android:layout_marginTop="10dp"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="Call To Action"
+               android:text="Call To Action (Post Objective)"
                android:textColor="#000"
                android:textSize="18dp" />
 
            <EditText
                android:id="@+id/et_action"
-               android:hint="Submit Posts to/for"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:background="@drawable/et_shape_black"
                android:paddingLeft="5dp"
                android:paddingTop="5dp"
                android:textSize="16dp"
-               android:textColor="#000" />
+               android:textColor="#000"
+               android:freezesText="true" />
 
            <TextView
                android:layout_marginTop="10dp"

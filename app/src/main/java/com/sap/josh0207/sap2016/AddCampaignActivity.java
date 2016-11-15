@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.facebook.internal.Utility;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageOptions;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -50,9 +52,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.onClick;
 import static java.security.AccessController.getContext;
 
 public class AddCampaignActivity extends AppCompatActivity {
+
     private ImageButton HeroImageBtn, BrandLogoBtn;
 
     private static final int REQUEST_CAMERA = 1;
@@ -78,7 +82,7 @@ public class AddCampaignActivity extends AppCompatActivity {
 
     private String heroDownloadUri, logoDownloadUri;
 
-    private String uid, category_selected;
+    private String uid, category_selected,post_id;
 
     List<String> list_category;
 
@@ -87,7 +91,7 @@ public class AddCampaignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_campaign);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.faq_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.add_campaign_toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -131,7 +135,7 @@ public class AddCampaignActivity extends AppCompatActivity {
         list_category.add("Social Media, Web, Tech");
         list_category.add("Travel & Destinations");
 
-        ArrayAdapter<String> adp = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, list_category);
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list_category);
 
         category.setAdapter(adp);
 
@@ -299,21 +303,33 @@ public class AddCampaignActivity extends AppCompatActivity {
         } else {
             mProgress.setMessage("Creating Campaign");
             mProgress.show();
-            StorageReference heroFilePath = mImage.child("Campaign").child("HeroImage").child(Image_hero_Uri.getLastPathSegment());
-            StorageReference logoFilePath = mImage.child("Campaign").child("LogoImage").child(Image_logo_Uri.getLastPathSegment());
+            final StorageReference heroFilePath = mImage.child("Campaign").child("HeroImage").child(Image_hero_Uri.getPath());
+            StorageReference logoFilePath = mImage.child("Campaign").child("LogoImage").child(Image_logo_Uri.getPath());
 
             heroFilePath.putFile(Image_hero_Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     heroDownloadUri = taskSnapshot.getDownloadUrl().toString();
+                    if(heroDownloadUri!=null) {
+                        Picasso.with(getApplicationContext()).load(heroDownloadUri).into(HeroImageBtn);
+                    }else if (heroDownloadUri == null){
+                        Toast.makeText(getApplicationContext(), "Please upload Hero Image", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             logoFilePath.putFile(Image_logo_Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     logoDownloadUri = taskSnapshot.getDownloadUrl().toString();
+                    if(heroDownloadUri!=null) {
+                        Picasso.with(getApplicationContext()).load(logoDownloadUri).into(BrandLogoBtn);
+                    }else if (logoDownloadUri == null){
+                        Toast.makeText(getApplicationContext(), "Please upload Logo Image", Toast.LENGTH_LONG).show();
+                    }
 
                     DatabaseReference newCampaign = mdatabase.push();
+                    newCampaign.child("hero_image").setValue(heroDownloadUri);
+                    newCampaign.child("logo_image").setValue(logoDownloadUri);
                     newCampaign.child("brand_name").setValue(brand_name);
                     newCampaign.child("campaign_name").setValue(campaign_name);
                     newCampaign.child("description").setValue(description);
@@ -323,15 +339,38 @@ public class AddCampaignActivity extends AppCompatActivity {
                     newCampaign.child("content").setValue(get_content);
                     newCampaign.child("action").setValue(get_action);
                     newCampaign.child("tc").setValue(term);
-                    newCampaign.child("hero_image").setValue(heroDownloadUri);
-                    newCampaign.child("logo_image").setValue(logoDownloadUri);
                     newCampaign.child("merchant_id").setValue(uid);
                     newCampaign.child("status").setValue("3");
+
+                    post_id = newCampaign.getKey();
                 }
             });
         }
-       mProgress.dismiss();
-        Toast.makeText(getApplicationContext(),"Create Successfull",Toast.LENGTH_LONG).show();
+        mProgress.dismiss();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm").setCancelable(false);
+        builder.setMessage("Your application have successfully send to our team, we will respond on it within 24 hours.\n" +
+                "Add more photo about your campaign?");
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                Intent i = new Intent(getApplicationContext(),CampaignAddPhotoActivity.class);
+                i.putExtra("post_id",post_id) ;
+                startActivity(i);
+            }
+        });
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                dialog.dismiss();
+                Intent intent = new Intent(getApplicationContext(),BrandHomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        builder.show();
     }
 }
 
