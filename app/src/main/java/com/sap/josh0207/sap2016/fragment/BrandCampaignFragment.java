@@ -78,6 +78,6 @@ public class BrandCampaignFragment extends Fragment {
             campaign_desc.setText(description);
         }
 
-        
+
     }
 }
