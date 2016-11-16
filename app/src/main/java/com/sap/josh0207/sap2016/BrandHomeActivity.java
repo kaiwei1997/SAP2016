@@ -80,6 +80,11 @@ public class BrandHomeActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        BrandCampaignFragment campaign = new BrandCampaignFragment();
+        FragmentManager manager_campaign = getSupportFragmentManager();
+        manager_campaign.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).
+                replace(R.id.content_brand__home,campaign,CURRENT_TAG).commit();
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

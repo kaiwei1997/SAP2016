@@ -330,8 +330,8 @@ public class AddCampaignActivity extends AppCompatActivity {
                     DatabaseReference newCampaign = mdatabase.push();
                     newCampaign.child("hero_image").setValue(heroDownloadUri);
                     newCampaign.child("logo_image").setValue(logoDownloadUri);
-                    newCampaign.child("brand_name").setValue(brand_name);
-                    newCampaign.child("campaign_name").setValue(campaign_name);
+                    newCampaign.child("brandName").setValue(brand_name);
+                    newCampaign.child("campaignName").setValue(campaign_name);
                     newCampaign.child("description").setValue(description);
                     newCampaign.child("category").setValue(category_selected);
                     newCampaign.child("link").setValue(product_link);
