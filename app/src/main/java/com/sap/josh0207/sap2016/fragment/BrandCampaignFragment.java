@@ -1,5 +1,6 @@
 package com.sap.josh0207.sap2016.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -17,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sap.josh0207.sap2016.Campaign;
 import com.sap.josh0207.sap2016.R;
+import com.squareup.picasso.Picasso;
 
 public class BrandCampaignFragment extends Fragment {
 
@@ -32,13 +36,6 @@ public class BrandCampaignFragment extends Fragment {
         mCampaignList = (RecyclerView)view.findViewById(R.id.campaign_list);
         mCampaignList.setHasFixedSize(true);
         mCampaignList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
-
-        //Load AdMob
-        MobileAds.initialize(getActivity(),"ca-app-pub-4516935382926964~7526464337");
-        AdView mAdView = (AdView) view.findViewById(R.id.adView1);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
 
         return view;
     }
@@ -56,6 +53,7 @@ public class BrandCampaignFragment extends Fragment {
             protected void populateViewHolder(CampaignViewHolder viewHolder,Campaign model, int position){
                 viewHolder.setCampaignName(model.getCampaignName());
                 viewHolder.setDescription(model.getDescription());
+                viewHolder.setHeroImage(getActivity().getApplicationContext(),model.getHero_image());
             }
         };
         mCampaignList.setAdapter(firebaseRecyclerAdapter);
@@ -78,6 +76,10 @@ public class BrandCampaignFragment extends Fragment {
             campaign_desc.setText(description);
         }
 
+        public void setHeroImage(Context ctx, String heroImage){
+            ImageView heroImageView = (ImageView)mView.findViewById(R.id.campaign_image);
+            Picasso.with(ctx).load(heroImage).into(heroImageView);
+        }
 
     }
 }

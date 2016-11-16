@@ -9,16 +9,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/campaign_list"></android.support.v7.widget.RecyclerView>
-
-            <com.google.android.gms.ads.AdView
-                android:layout_marginTop="10dp"
-                android:id="@+id/adView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/banner_ad_unit_id1"
-                android:layout_gravity="center">
-            </com.google.android.gms.ads.AdView>
 </RelativeLayout>
