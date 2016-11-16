@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:textSize="18dp"
             android:textColor="#000"
-            android:text="Title"
             android:textStyle="bold"
             android:padding="10dp"/>
 
@@ -27,7 +26,6 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
-            app:srcCompat="@drawable/image"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
         </ImageView>
@@ -36,7 +34,6 @@
             android:id="@+id/campaign_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Desc"
             android:textSize="16dp"
             android:padding="10dp"/>
 
