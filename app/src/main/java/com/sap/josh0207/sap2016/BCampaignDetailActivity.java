@@ -22,7 +22,7 @@ public class BCampaignDetailActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase, mDatabase1;
     private TextView brandName,campaignName;
-    private EditText objective,description,term,getProduct;
+    private EditText objective,descrip,tc,getProduct;
     private ImageView brandLogo,m1,m2,m3;
     private Button edit,close;
 
@@ -42,8 +42,8 @@ public class BCampaignDetailActivity extends AppCompatActivity {
         brandName = (TextView)findViewById(R.id.tv_brandName);
         campaignName = (TextView)findViewById(R.id.tv_Title);
         objective = (EditText)findViewById(R.id.et_objective);
-        description = (EditText)findViewById(R.id.Desc);
-        term = (EditText)findViewById(R.id.et_tc);
+        descrip = (EditText)findViewById(R.id.Desc);
+        tc = (EditText)findViewById(R.id.et_tc);
         getProduct = (EditText)findViewById(R.id.et_getProduct);
         m1 = (ImageView)findViewById(R.id.mood1);
         m2 = (ImageView)findViewById(R.id.mood2);
@@ -86,8 +86,29 @@ public class BCampaignDetailActivity extends AppCompatActivity {
                     m1.setVisibility(View.VISIBLE);
                 }
 
+                String mo2 = (String)dataSnapshot.child("mood2").getValue();
+                if(mo2.equals(null)){
+                    m2.setVisibility(View.INVISIBLE);
+                }else{
+                    Picasso.with(BCampaignDetailActivity.this).load(mo2).into(m2);
+                    m2.setVisibility(View.VISIBLE);
+                }
+
+                String mo3 = (String)dataSnapshot.child("mood3").getValue();
+                if(mo3.equals(null)){
+                    m3.setVisibility(View.INVISIBLE);
+                }else{
+                    Picasso.with(BCampaignDetailActivity.this).load(mo3).into(m3);
+                    m3.setVisibility(View.VISIBLE);
+                }
+
+
                 brandName.setText(brand);
                 campaignName.setText(title);
+                objective.setText(objc);
+                descrip.setText(description);
+                tc.setText(term);
+                getProduct.setText(get_pro);
             }
 
             @Override
