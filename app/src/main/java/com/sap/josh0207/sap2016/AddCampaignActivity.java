@@ -49,7 +49,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static android.R.attr.onClick;
@@ -57,14 +60,12 @@ import static java.security.AccessController.getContext;
 
 public class AddCampaignActivity extends AppCompatActivity {
 
-    private ImageButton HeroImageBtn, BrandLogoBtn;
+    private ImageButton HeroImageBtn;
 
     private static final int REQUEST_CAMERA = 1;
     private static final int GALLERY_REQUEST = 2;
-    private static final int LOGO_GALLERY_REQUEST = 3;
 
     private Uri Image_hero_Uri = null;
-    private Uri Image_logo_Uri = null;
 
     private Spinner category;
 
@@ -80,7 +81,7 @@ public class AddCampaignActivity extends AppCompatActivity {
 
     private ProgressDialog mProgress;
 
-    private String heroDownloadUri, logoDownloadUri;
+    private String heroDownloadUri;
 
     private String uid, category_selected,post_id;
 
@@ -110,7 +111,6 @@ public class AddCampaignActivity extends AppCompatActivity {
         mImage = FirebaseStorage.getInstance().getReference();
 
         HeroImageBtn = (ImageButton) findViewById(R.id.btn_hero_image);
-        BrandLogoBtn = (ImageButton) findViewById(R.id.btn_logo_image);
 
         submit = (Button) findViewById(R.id.btn_submit);
 
@@ -160,13 +160,6 @@ public class AddCampaignActivity extends AppCompatActivity {
             }
         });
 
-        BrandLogoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                galleryIntent1();
-            }
-        });
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,13 +202,6 @@ public class AddCampaignActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select File"), GALLERY_REQUEST);
     }
 
-    private void galleryIntent1() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select File"), LOGO_GALLERY_REQUEST);
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -237,16 +223,13 @@ public class AddCampaignActivity extends AppCompatActivity {
                     fo = new FileOutputStream(destination);
                     fo.write(bytes.toByteArray());
                     fo.close();
+                    Image_hero_Uri = Uri.fromFile(destination);
+                    HeroImageBtn.setImageURI(Image_hero_Uri);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Image_hero_Uri = Uri.fromFile(destination);
-                HeroImageBtn.setImageURI(Image_hero_Uri);
-            } else if (requestCode == LOGO_GALLERY_REQUEST) {
-                Image_logo_Uri = data.getData();
-                BrandLogoBtn.setImageURI(Image_logo_Uri);
             }
         }
     }
@@ -282,8 +265,6 @@ public class AddCampaignActivity extends AppCompatActivity {
 
         if (Image_hero_Uri == null) {
             Toast.makeText(getApplicationContext(), "Please upload Hero Image", Toast.LENGTH_LONG).show();
-        } else if (Image_logo_Uri == null) {
-            Toast.makeText(getApplicationContext(), "Please upload Logo Image", Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(brand_name)) {
             Toast.makeText(getApplicationContext(), "Please enter Brand Name", Toast.LENGTH_LONG).show();
         } else if (TextUtils.isEmpty(campaign_name)) {
@@ -303,74 +284,70 @@ public class AddCampaignActivity extends AppCompatActivity {
         } else {
             mProgress.setMessage("Creating Campaign");
             mProgress.show();
+            final DatabaseReference newCampaign = mdatabase.push();
             final StorageReference heroFilePath = mImage.child("Campaign").child("HeroImage").child(Image_hero_Uri.getPath());
-            StorageReference logoFilePath = mImage.child("Campaign").child("LogoImage").child(Image_logo_Uri.getPath());
 
             heroFilePath.putFile(Image_hero_Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     heroDownloadUri = taskSnapshot.getDownloadUrl().toString();
-                    if(heroDownloadUri!=null) {
+                    if (heroDownloadUri != null) {
                         Picasso.with(getApplicationContext()).load(heroDownloadUri).into(HeroImageBtn);
-                    }else if (heroDownloadUri == null){
+                        newCampaign.child("hero_image").setValue(heroDownloadUri);
+                    } else if (heroDownloadUri == null) {
                         Toast.makeText(getApplicationContext(), "Please upload Hero Image", Toast.LENGTH_LONG).show();
                     }
                 }
             });
-            logoFilePath.putFile(Image_logo_Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    logoDownloadUri = taskSnapshot.getDownloadUrl().toString();
-                    if(heroDownloadUri!=null) {
-                        Picasso.with(getApplicationContext()).load(logoDownloadUri).into(BrandLogoBtn);
-                    }else if (logoDownloadUri == null){
-                        Toast.makeText(getApplicationContext(), "Please upload Logo Image", Toast.LENGTH_LONG).show();
-                    }
+            newCampaign.child("brandName").setValue(brand_name);
+            newCampaign.child("campaignName").setValue(campaign_name);
+            newCampaign.child("description").setValue(description);
+            newCampaign.child("category").setValue(category_selected);
+            newCampaign.child("link").setValue(product_link);
+            newCampaign.child("get_product").setValue(get_Product);
+            newCampaign.child("content").setValue(get_content);
+            newCampaign.child("action").setValue(get_action);
+            newCampaign.child("tc").setValue(term);
+            newCampaign.child("merchant_id").setValue(uid);
+            newCampaign.child("statusCode").setValue("1");
 
-                    DatabaseReference newCampaign = mdatabase.push();
-                    newCampaign.child("hero_image").setValue(heroDownloadUri);
-                    newCampaign.child("logo_image").setValue(logoDownloadUri);
-                    newCampaign.child("brandName").setValue(brand_name);
-                    newCampaign.child("campaignName").setValue(campaign_name);
-                    newCampaign.child("description").setValue(description);
-                    newCampaign.child("category").setValue(category_selected);
-                    newCampaign.child("link").setValue(product_link);
-                    newCampaign.child("get_product").setValue(get_Product);
-                    newCampaign.child("content").setValue(get_content);
-                    newCampaign.child("action").setValue(get_action);
-                    newCampaign.child("tc").setValue(term);
-                    newCampaign.child("merchant_id").setValue(uid);
-                    newCampaign.child("status").setValue("3");
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            Calendar c = Calendar.getInstance();
+            c.add(Calendar.DATE,30);
+            String formatDate = df.format(c.getTimeInMillis());
+            Toast.makeText(getApplicationContext(),formatDate,Toast.LENGTH_LONG).show();
 
-                    post_id = newCampaign.getKey();
-                }
-            });
+            newCampaign.child("expired").setValue(formatDate);
+
+            post_id = newCampaign.getKey();
         }
         mProgress.dismiss();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirm").setCancelable(false);
-        builder.setMessage("Your application have successfully send to our team, we will respond on it within 24 hours.\n" +
-                "Add more photo about your campaign?");
+        if (post_id != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Confirm").setCancelable(false);
+            builder.setMessage("Your application have successfully send to our team, we will respond on it within 24 hours.\n" +
+                    "Add more photo about your campaign?");
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-                Intent i = new Intent(getApplicationContext(),CampaignAddPhotoActivity.class);
-                i.putExtra("post_id",post_id) ;
-                startActivity(i);
-            }
-        });
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                    Intent i = new Intent(getApplicationContext(), CampaignAddPhotoActivity.class);
+                    i.putExtra("post_id", post_id);
+                    startActivity(i);
+                }
+            });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int i) {
-                dialog.dismiss();
-                Intent intent = new Intent(getApplicationContext(),BrandHomeActivity.class);
-                startActivity(intent);
-            }
-        });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int i) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), BrandHomeActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-        builder.show();
+            builder.show();
+        }
     }
 }
 

@@ -91,7 +91,7 @@ public class BrandSettingsFragment extends Fragment {
 
         //Brand Profile Pic
         setting_profile_pic = (ImageButton)view.findViewById(R.id.setting_merchant_profile_pic);
-        DatabaseReference current_merchant_pic = mdatabase.child(uid).child("image");
+        DatabaseReference current_merchant_pic = mdatabase.child(uid).child("logo_image");
 
         current_merchant_pic.addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,7 +111,7 @@ public class BrandSettingsFragment extends Fragment {
         //ListView
         ListView listView = (ListView)view.findViewById(R.id.setting_listView);
 
-        String[] choice = new String[]{"Set Profile","Add Payment Detail"};
+        String[] choice = new String[]{"Set Profile Detail","Add Payment Detail"};
 
         ArrayList<String> choiceList = new ArrayList<String>();
         choiceList.addAll(Arrays.asList(choice));
@@ -237,7 +237,7 @@ public class BrandSettingsFragment extends Fragment {
                         mAuth = FirebaseAuth.getInstance();
                         DatabaseReference current_user_db = mdatabase.child(uid);
 
-                        current_user_db.child("image").setValue(downloadUrl);
+                        current_user_db.child("logo_image").setValue(downloadUrl);
 
 
                         Toast.makeText(getActivity().getApplicationContext(),"Upload Successful",Toast.LENGTH_SHORT).show();

@@ -5,6 +5,16 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.sap.josh0207.sap2016.fragment.BrandCampaignFragment"
     android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_status" />
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

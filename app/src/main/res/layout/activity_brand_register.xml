@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -41,8 +41,29 @@
             android:weightSum="1">
 
             <!-- Brand Register Label -->
-            <!--  First Name Label -->
+            <!-- Brand Logo Image -->
+            <TextView android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="Logo Image"
+                android:layout_marginTop="15dp"
+                android:textSize="18dp"
+                android:paddingLeft="1dp"
+                />
 
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/user_profile_default"
+                android:id="@+id/merchant_logo"
+                android:foregroundGravity="center"
+                android:clickable="true"
+                android:saveEnabled="true"
+                android:visibility="visible"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="10dp"/>
+
+            <!--  First Name Label -->
             <TextView android:layout_width="104dp"
                 android:layout_height="wrap_content"
                 android:textColor="#ffffff"

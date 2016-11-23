@@ -10,7 +10,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/add_campaign_toolbar"
-        android:minHeight="?attr/actionBarSize"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@android:color/white"
@@ -41,21 +41,6 @@
               app:srcCompat="@drawable/btn_add_image"
               android:scaleType="centerCrop"
               android:id="@+id/btn_hero_image" />
-
-          <TextView
-               android:layout_marginTop="10dp"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Add Brand Logo"
-               android:textColor="#000"
-               android:textSize="18dp" />
-
-           <ImageButton
-               android:layout_width="match_parent"
-               android:layout_height="290dp"
-               app:srcCompat="@drawable/btn_add_image"
-               android:id="@+id/btn_logo_image"
-               android:scaleType="centerCrop"/>
 
            <TextView
                android:layout_marginTop="10dp"
@@ -225,9 +210,17 @@
                android:paddingTop="5dp"
                android:paddingLeft="5dp"/>
 
+           <TextView
+               android:layout_marginTop="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="By Clicking Submit You Are Agree Term And Condition for Publishing"
+               android:textColor="#000"
+               android:textSize="18dp" />
+
            <Button
                android:id="@+id/btn_submit"
-               android:layout_width="wrap_content"
+               android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text="SUBMIT"
                android:textColor="#000"
@@ -236,7 +229,8 @@
                android:paddingLeft="5dp"
                android:paddingRight="5dp"
                android:paddingBottom="5dp"
-               android:layout_marginTop="8dp"/>
+               android:layout_marginTop="15dp"
+               android:layout_gravity="center"/>
 
        </LinearLayout>
     </ScrollView>

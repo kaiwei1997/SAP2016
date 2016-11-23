@@ -2,9 +2,14 @@ package com.sap.josh0207.sap2016;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,23 +20,36 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class BrandRegisterActivity extends Activity{
     private EditText first_name,last_name,company_name,brand_email,contactNo,password,pass_confirm;
     private Button btn_register;
     private TextView link_to_login;
     private CheckBox checkBox;
+    private ImageButton logo;
 
     private FirebaseAuth mAuth;
 
@@ -39,6 +57,14 @@ public class BrandRegisterActivity extends Activity{
 
     private ProgressDialog mProgress;
 
+    private static final int REQUEST_CAMERA = 1;
+    private static final int GALLERY_REQUEST = 2;
+
+    private Uri Image_logo_Uri = null;
+
+    private StorageReference mImage;
+
+    private String logoDownloadUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +81,8 @@ public class BrandRegisterActivity extends Activity{
 
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Merchant");
 
+        mImage = FirebaseStorage.getInstance().getReference();
+
         first_name = (EditText) findViewById(R.id.et_firstname);
         last_name = (EditText) findViewById(R.id.et_lastname);
         company_name = (EditText) findViewById(R.id.et_companyname);
@@ -66,9 +94,8 @@ public class BrandRegisterActivity extends Activity{
         btn_register = (Button) findViewById(R.id.btnRegister);
         link_to_login = (TextView) findViewById(R.id.link_to_login);
 
+        logo = (ImageButton)findViewById(R.id.merchant_logo);
 
-
-        // Register button Click Event
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +112,77 @@ public class BrandRegisterActivity extends Activity{
                 startActivity(i);
             }
         });
+
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectImage();
+            }
+        });
+    }
+
+    private void selectImage() {
+        final CharSequence[] items = {"Take Photo", "Choose from Library",
+                "Cancel"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(BrandRegisterActivity.this);
+        builder.setTitle("Add Photo!");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Take Photo")) {
+                    cameraIntent();
+                } else if (items[item].equals("Choose from Library")) {
+                    galleryIntent();
+                } else if (items[item].equals("Cancel")) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void cameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, REQUEST_CAMERA);
+    }
+
+    private void galleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select File"), GALLERY_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GALLERY_REQUEST) {
+                Image_logo_Uri = data.getData();
+                logo.setImageURI(Image_logo_Uri);
+
+            } else if (requestCode == REQUEST_CAMERA) {
+                Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+                File destination = new File(Environment.getExternalStorageDirectory(),
+                        System.currentTimeMillis() + ".jpg");
+                FileOutputStream fo;
+                try {
+                    destination.createNewFile();
+                    fo = new FileOutputStream(destination);
+                    fo.write(bytes.toByteArray());
+                    fo.close();
+                    Image_logo_Uri = Uri.fromFile(destination);
+                    logo.setImageURI(Image_logo_Uri);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private void startBrandRegister() {
@@ -95,7 +193,10 @@ public class BrandRegisterActivity extends Activity{
         final String contact = contactNo.getText().toString().trim();
         String pass = password.getText().toString().trim();
 
-        if (TextUtils.isEmpty(f_name)) {
+        if(Image_logo_Uri==null){
+            Toast.makeText(getApplicationContext(), "Please insert logo image", Toast.LENGTH_LONG).show();
+        }
+        else if (TextUtils.isEmpty(f_name)) {
             Toast.makeText(getApplicationContext(), "Please enter your first name", Toast.LENGTH_LONG).show();
             first_name.setFocusable(true);
         } else if (TextUtils.isEmpty(l_name)) {
@@ -143,7 +244,22 @@ public class BrandRegisterActivity extends Activity{
                     } else {
                         String userId = mAuth.getCurrentUser().getUid();
 
-                        DatabaseReference current_user_db = mdatabase.child(userId);
+                        final DatabaseReference current_user_db = mdatabase.child(userId);
+
+                        final StorageReference logoFilePath = mImage.child("Merchant_Logo").child(Image_logo_Uri.getPath());
+
+                        logoFilePath.putFile(Image_logo_Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                logoDownloadUri = taskSnapshot.getDownloadUrl().toString();
+                                if (logoDownloadUri != null) {
+                                    Picasso.with(getApplicationContext()).load(logoDownloadUri).into(logo);
+                                    current_user_db.child("logo_image").setValue(logoDownloadUri);
+                                } else if (logoDownloadUri == null) {
+                                    Toast.makeText(getApplicationContext(), "Please upload Hero Image", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
 
                         current_user_db.child("first_name").setValue(f_name);
                         current_user_db.child("last_name").setValue(l_name);

@@ -162,6 +162,7 @@ public class CampaignAddPhotoActivity extends AppCompatActivity {
 
         mood = mDatabase.child(post_id);
 
+
         if(m1Uri != null) {
             StorageReference moodFilePath1 = mStrorage.child("Campaign").child("Mood").child(m1Uri.getPath());
             moodFilePath1.putFile(m1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

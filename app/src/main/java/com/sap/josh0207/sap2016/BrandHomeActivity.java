@@ -14,12 +14,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -125,7 +127,7 @@ public class BrandHomeActivity extends AppCompatActivity {
         String uid = merchant.getUid();
 
         //Load merchant profile
-        DatabaseReference current_merchant_pic = mdatabase.child(uid).child("image");
+        DatabaseReference current_merchant_pic = mdatabase.child(uid).child("logo_image");
 
         current_merchant_pic.addValueEventListener(new ValueEventListener() {
             @Override
