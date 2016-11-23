@@ -5,18 +5,20 @@ package com.sap.josh0207.sap2016;
  */
 
 public class Campaign {
-    private String description,campaignName,hero_image,expired,merchantId;
+    private String description,campaignName,hero_image,expired,merchant_id;
+    private String statusCode;
 
     public Campaign(){
 
     }
 
-    public Campaign(String description, String campaignName, String hero_image, String expired, String merchnatId) {
+    public Campaign(String description, String campaignName, String hero_image, String expired, String merchant_id,String statusCode) {
         this.description = description;
         this.campaignName = campaignName;
         this.hero_image = hero_image;
         this.expired = expired;
-        this.merchantId = merchnatId;
+        this.merchant_id = merchant_id;
+        this.statusCode = statusCode;
     }
 
     public String getCampaignName() {
@@ -51,12 +53,20 @@ public class Campaign {
         this.expired = expired;
     }
 
-    public String getMerchantId() {
-        return merchantId;
+    public String getMerchant_id() {
+        return merchant_id;
     }
 
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
+    public void setMerchant_id(String merchantId) {
+        this.merchant_id = merchantId;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 }
 

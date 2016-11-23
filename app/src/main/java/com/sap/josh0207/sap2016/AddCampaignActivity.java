@@ -315,8 +315,6 @@ public class AddCampaignActivity extends AppCompatActivity {
             Calendar c = Calendar.getInstance();
             c.add(Calendar.DATE,30);
             String formatDate = df.format(c.getTimeInMillis());
-            Toast.makeText(getApplicationContext(),formatDate,Toast.LENGTH_LONG).show();
-
             newCampaign.child("expired").setValue(formatDate);
 
             post_id = newCampaign.getKey();
