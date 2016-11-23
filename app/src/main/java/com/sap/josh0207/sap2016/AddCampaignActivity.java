@@ -306,10 +306,13 @@ public class AddCampaignActivity extends AppCompatActivity {
             newCampaign.child("link").setValue(product_link);
             newCampaign.child("get_product").setValue(get_Product);
             newCampaign.child("content").setValue(get_content);
-            newCampaign.child("action").setValue(get_action);
+            newCampaign.child("objective").setValue(get_action);
             newCampaign.child("tc").setValue(term);
             newCampaign.child("merchant_id").setValue(uid);
             newCampaign.child("statusCode").setValue("1");
+            newCampaign.child("mood1").setValue("");
+            newCampaign.child("mood2").setValue("");
+            newCampaign.child("mood3").setValue("");
 
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
             Calendar c = Calendar.getInstance();

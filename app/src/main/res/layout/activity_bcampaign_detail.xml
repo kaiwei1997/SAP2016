@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_bcampaign_detail"
@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/about_us_toolbar"
+        android:id="@+id/campaign_detail_toolbar"
         android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +17,176 @@
         android:background="?attr/colorPrimary">
     </android.support.v7.widget.Toolbar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/image"
+                android:id="@+id/IV_BrandLogo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_brandName"
+                android:textSize="20dp"
+                android:textColor="#000"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_Title"
+                android:textSize="16dp"
+                android:textColor="#000"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Obj"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Objective"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_objective"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/CDesc"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Description"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Desc"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/content"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Content We'D Love From You"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Content"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Mood"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="MoodBoard"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/image"
+                android:id="@+id/mood1" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/image"
+                android:id="@+id/mood2"/>
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/image"
+                android:id="@+id/mood3"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tc"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Term And Condition for Post"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_tc"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/getProduct"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Where To Get Product"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_getProduct"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/houseRule"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:text="House Rules"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="- All imagery submitted must be owned and captured by you, unless otherwise directed by the brand.\n- Keep your post at the top of feed for 5hrs and live for 30days. Brands will be following it's engagement."
+                android:textSize="16dp"
+                android:textColor="#000"/>
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save Edit Detail"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:id="@+id/btn_Edit"/>
+
+            <Button
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Close Campaign"
+                android:textColor="#000"
+                android:textSize="16dp"
+                android:id="@+id/btn_Close"/>
+
+        </LinearLayout>
+    </ScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.sap.josh0207.sap2016.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sap.josh0207.sap2016.BCampaignDetailActivity;
 import com.sap.josh0207.sap2016.Campaign;
 import com.sap.josh0207.sap2016.R;
 import com.squareup.picasso.Picasso;
@@ -96,7 +98,7 @@ public class BrandCampaignFragment extends Fragment {
                            s = model.getExpired();
                            if (s.equals(formatDate) && id.equals(Uid)) {
                                viewHolder.setCampaignName(model.getCampaignName());
-                               viewHolder.setDescription(model.getDescription());
+                               viewHolder.setObjective(model.getObjective());
                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                            }else{
                                viewHolder.mView.setVisibility(View.GONE);
@@ -117,7 +119,7 @@ public class BrandCampaignFragment extends Fragment {
                            id = model.getMerchant_id().toString();
                            if (s.equals("2") && id.equals(Uid)) {
                                viewHolder.setCampaignName(model.getCampaignName());
-                               viewHolder.setDescription(model.getDescription());
+                               viewHolder.setObjective(model.getObjective());
                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                            }else{
                                viewHolder.mView.setVisibility(View.GONE);
@@ -138,7 +140,7 @@ public class BrandCampaignFragment extends Fragment {
                            id = model.getMerchant_id().toString();
                            if (s.equals("3") && id.equals(Uid)) {
                                viewHolder.setCampaignName(model.getCampaignName());
-                               viewHolder.setDescription(model.getDescription());
+                               viewHolder.setObjective(model.getObjective());
                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                            }else{
                                viewHolder.mView.setVisibility(View.GONE);
@@ -170,14 +172,24 @@ public class BrandCampaignFragment extends Fragment {
         ){
             @Override
             protected void populateViewHolder(CampaignViewHolder viewHolder,Campaign model, int position) {
+                final String post_id = getRef(position).getKey();
                 s = model.getMerchant_id().toString();
                 if (s.equals(Uid)) {
                     viewHolder.setCampaignName(model.getCampaignName());
-                    viewHolder.setDescription(model.getDescription());
+                    viewHolder.setObjective(model.getObjective());
                     viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                 }else{
                     viewHolder.mView.setVisibility(View.GONE);
                 }
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(view.getContext(), BCampaignDetailActivity.class);
+                        i.putExtra("Id",post_id);
+                        view.getContext().startActivity(i);
+                    }
+                });
             }
         };
         mCampaignList.setAdapter(firebaseRecyclerAdapter);
@@ -186,7 +198,7 @@ public class BrandCampaignFragment extends Fragment {
     public static class CampaignViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
-        TextView campaign_title,campaign_desc;
+        TextView campaign_title,campaign_obj;
         ImageView heroImageView;
 
         public CampaignViewHolder(View itemView) {
@@ -198,9 +210,9 @@ public class BrandCampaignFragment extends Fragment {
             campaign_title.setText (campaignName);
         }
 
-        public void setDescription (String description) {
-            campaign_desc = (TextView) mView.findViewById(R.id.campaign_desc);
-            campaign_desc.setText(description);
+        public void setObjective (String objective) {
+            campaign_obj = (TextView) mView.findViewById(R.id.campaign_desc);
+            campaign_obj.setText(objective);
         }
 
         public void setHeroImage(Context ctx, String heroImage){

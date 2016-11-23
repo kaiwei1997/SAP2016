@@ -5,15 +5,15 @@ package com.sap.josh0207.sap2016;
  */
 
 public class Campaign {
-    private String description,campaignName,hero_image,expired,merchant_id;
+    private String objective,campaignName,hero_image,expired,merchant_id;
     private String statusCode;
 
     public Campaign(){
 
     }
 
-    public Campaign(String description, String campaignName, String hero_image, String expired, String merchant_id,String statusCode) {
-        this.description = description;
+    public Campaign(String objective, String campaignName, String hero_image, String expired, String merchant_id,String statusCode) {
+        this.objective = objective;
         this.campaignName = campaignName;
         this.hero_image = hero_image;
         this.expired = expired;
@@ -29,12 +29,12 @@ public class Campaign {
         this.campaignName = campaignName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getObjective() {
+        return objective;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setObjective(String objective) {
+        this.objective = objective;
     }
 
     public String getHero_image() {
