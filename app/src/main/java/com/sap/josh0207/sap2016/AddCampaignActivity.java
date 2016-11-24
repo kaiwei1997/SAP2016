@@ -327,9 +327,9 @@ public class AddCampaignActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Confirm").setCancelable(false);
             builder.setMessage("Your application have successfully send to our team, we will respond on it within 24 hours.\n" +
-                    "Add more photo about your campaign?");
+                    "Now Add more photo about your campaign");
 
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                     Intent i = new Intent(getApplicationContext(), CampaignAddPhotoActivity.class);
@@ -337,16 +337,6 @@ public class AddCampaignActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             });
-
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(getApplicationContext(), BrandHomeActivity.class);
-                    startActivity(intent);
-                }
-            });
-
             builder.show();
         }
     }

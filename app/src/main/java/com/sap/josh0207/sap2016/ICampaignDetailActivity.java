@@ -2,7 +2,6 @@ package com.sap.josh0207.sap2016;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,20 +22,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class BCampaignDetailActivity extends AppCompatActivity {
-
-    private DatabaseReference mDatabase, mDatabase1;
-    private TextView brandName,campaignName;
-    private EditText objective,descrip,tc,getProduct,cont;
+public class ICampaignDetailActivity extends AppCompatActivity {
+    private DatabaseReference mDatabase, mDatabase1,mDatabase2;
+    private TextView brandName,campaignName,objective,descrip,tc,getProduct,cont;
     private ImageView brandLogo,m1,m2,m3;
-    private Button edit,close;
+    private Button create,report;
     private ProgressDialog mProgress;
     private String id;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bcampaign_detail);
+        setContentView(R.layout.activity_icampaign_detail);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.campaign_detail_toolbar);
         setSupportActionBar(toolbar);
@@ -50,33 +46,34 @@ public class BCampaignDetailActivity extends AppCompatActivity {
         brandLogo = (ImageView)findViewById(R.id.IV_BrandLogo);
         brandName = (TextView)findViewById(R.id.tv_brandName);
         campaignName = (TextView)findViewById(R.id.tv_Title);
-        objective = (EditText)findViewById(R.id.et_objective);
-        descrip = (EditText)findViewById(R.id.Desc);
-        tc = (EditText)findViewById(R.id.et_tc);
-        cont = (EditText)findViewById(R.id.Content);
-        getProduct = (EditText)findViewById(R.id.et_getProduct);
+        objective = (TextView)findViewById(R.id.et_objective);
+        descrip = (TextView)findViewById(R.id.Desc);
+        tc = (TextView)findViewById(R.id.et_tc);
+        cont = (TextView)findViewById(R.id.Content);
+        getProduct = (TextView)findViewById(R.id.et_getProduct);
         m1 = (ImageView)findViewById(R.id.mood1);
         m2 = (ImageView)findViewById(R.id.mood2);
         m3 = (ImageView)findViewById(R.id.mood3);
-        edit = (Button)findViewById(R.id.btn_Edit);
-        close = (Button)findViewById(R.id.btn_Close);
+        create = (Button)findViewById(R.id.btn_Create);
+        report = (Button)findViewById(R.id.btn_Report);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Campaign");
         mDatabase1 = FirebaseDatabase.getInstance().getReference().child("Merchant");
+        mDatabase2 = FirebaseDatabase.getInstance().getReference().child("Report_Campaign");
 
-        id = getIntent().getStringExtra("Id");
+        id = getIntent().getStringExtra("ID");
 
-        edit.setOnClickListener(new View.OnClickListener() {
+        create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SaveEdit();
             }
         });
 
-        close.setOnClickListener(new View.OnClickListener() {
+        report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CloseCampaign();
+                ReportCampaign();
             }
         });
 
@@ -88,7 +85,7 @@ public class BCampaignDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String logo = (String)dataSnapshot.child("logo_image").getValue();
-                        Picasso.with(BCampaignDetailActivity.this).load(logo).into(brandLogo);
+                        Picasso.with(ICampaignDetailActivity.this).load(logo).into(brandLogo);
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -110,11 +107,11 @@ public class BCampaignDetailActivity extends AppCompatActivity {
                 if(mo1=="") {
                     m1.setVisibility(View.INVISIBLE);
                 }else if(mo1!=""){
-                    Picasso.with(BCampaignDetailActivity.this).load(mo1).into(m1);
+                    Picasso.with(ICampaignDetailActivity.this).load(mo1).into(m1);
                 }else if(mo2!="") {
-                    Picasso.with(BCampaignDetailActivity.this).load(mo2).into(m2);
+                    Picasso.with(ICampaignDetailActivity.this).load(mo2).into(m2);
                 }else if(mo3!="") {
-                    Picasso.with(BCampaignDetailActivity.this).load(mo3).into(m3);
+                    Picasso.with(ICampaignDetailActivity.this).load(mo3).into(m3);
                 }
 
                 brandName.setText(brand);
@@ -145,48 +142,19 @@ public class BCampaignDetailActivity extends AppCompatActivity {
     }
 
     public void SaveEdit(){
-        String obj = objective.getText().toString().trim();
-        String desc = descrip.getText().toString().trim();
-        String con = cont.getText().toString().trim();
-        String getPro = getProduct.getText().toString().trim();
-        String tac = tc.getText().toString().trim();
 
-        if(TextUtils.isEmpty(obj)){
-            Toast.makeText(getApplicationContext(), "Objective Cannot Be Blank", Toast.LENGTH_LONG).show();
-        }
-        else if(TextUtils.isEmpty(desc)){
-            Toast.makeText(getApplicationContext(), "Description Cannot Be Blank", Toast.LENGTH_LONG).show();
-        }else if(TextUtils.isEmpty(con)){
-            Toast.makeText(getApplicationContext(), "Content Cannot Be Blank", Toast.LENGTH_LONG).show();
-        }else if(TextUtils.isEmpty(getPro)){
-            Toast.makeText(getApplicationContext(), "Get Product Cannot Be Blank", Toast.LENGTH_LONG).show();
-        }else if(TextUtils.isEmpty(tac)){
-            Toast.makeText(getApplicationContext(), "Term & Condition for post Cannot Be Blank", Toast.LENGTH_LONG).show();
-        }else{
-            mProgress.setMessage("Saving...");
-            mProgress.show();
-            DatabaseReference db = mDatabase.child(id);
-            db.child("objective").setValue(obj);
-            db.child("description").setValue(desc);
-            db.child("content").setValue(con);
-            db.child("get_product").setValue(getPro);
-            db.child("tc").setValue(tac);
-            Toast.makeText(getApplicationContext(),"Update Sucessfully",Toast.LENGTH_LONG).show();
-        }
-        mProgress.dismiss();
     }
 
-    public void CloseCampaign(){
+    public void ReportCampaign(){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm").setCancelable(false);
-        builder.setMessage("Are you really want to close this campaign?");
+        builder.setMessage("Are you really want to report this campaign?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                DatabaseReference db = mDatabase.child(id);
-                db.child("statusCode").setValue("3");
-                Toast.makeText(getApplicationContext(),"This campaign have been suspeend",Toast.LENGTH_LONG).show();
-                finish();
+                DatabaseReference db = mDatabase2.child("campaignID");
+                Toast.makeText(getApplicationContext(),"This Campaign Have Been Report Successfully, Our Team Will review On it in 2 Working Days",Toast.LENGTH_LONG).show();
+                db.setValue(id);
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

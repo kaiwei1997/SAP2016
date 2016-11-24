@@ -91,7 +91,6 @@ public class InfSettingsFragment extends Fragment {
         });
 
         profilePicture = (ImageView)view.findViewById(R.id.setting_inf_profile_pic);
-        f_total = (TextView)view.findViewById(R.id.settings_number_of_follower) ;
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         for(UserInfo profile: user.getProviderData()){
@@ -114,7 +113,7 @@ public class InfSettingsFragment extends Fragment {
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
                         String data = response.getJSONObject().toString();
-                        f_total.setText(data);
+
                     }
                 }
         ).executeAsync();

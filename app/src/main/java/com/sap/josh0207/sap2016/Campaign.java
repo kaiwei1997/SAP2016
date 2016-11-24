@@ -6,19 +6,20 @@ package com.sap.josh0207.sap2016;
 
 public class Campaign {
     private String objective,campaignName,hero_image,expired,merchant_id;
-    private String statusCode;
+    private String statusCode, category;
 
     public Campaign(){
 
     }
 
-    public Campaign(String objective, String campaignName, String hero_image, String expired, String merchant_id,String statusCode) {
+    public Campaign(String objective, String campaignName, String hero_image, String expired, String merchant_id,String statusCode, String category) {
         this.objective = objective;
         this.campaignName = campaignName;
         this.hero_image = hero_image;
         this.expired = expired;
         this.merchant_id = merchant_id;
         this.statusCode = statusCode;
+        this.category = category;
     }
 
     public String getCampaignName() {
@@ -67,6 +68,14 @@ public class Campaign {
 
     public void setStatusCode(String statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
 

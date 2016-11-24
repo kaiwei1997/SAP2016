@@ -63,6 +63,7 @@ public class BrandHomeActivity extends AppCompatActivity {
 
     // tags used to attach the fragments
     private static final String TAG_CAMPAIGN = "campaigns";
+    private static final String TAG_PROPOSAL = "proposal";
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_CAMPAIGN;
@@ -117,7 +118,7 @@ public class BrandHomeActivity extends AppCompatActivity {
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         //Set menu dot
-        navigationView.getMenu().getItem(1).setActionView(R.layout.menu_dot);
+        navigationView.getMenu().getItem(2).setActionView(R.layout.menu_dot);
 
         // load toolbar titles from string resources
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
@@ -223,6 +224,7 @@ public class BrandHomeActivity extends AppCompatActivity {
                         manager_campaign.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).
                                 replace(R.id.content_brand__home,campaign,CURRENT_TAG).commit();
                         break;
+
                     case R.id.nav_BrandNotifications:
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_NOTIFICATIONS;

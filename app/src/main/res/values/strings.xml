@@ -17,6 +17,7 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="nav_MyCampaign">My Campaign</string>
+    <string name="nav_Proposal">Proposal</string>
     <string name="nav_AddCampaign">AddCampaign</string>
     <string name="nav_notifications">Notifications</string>
     <string name="nav_settings">Settings</string>

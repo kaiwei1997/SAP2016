@@ -71,7 +71,8 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".AddCampaignActivity" />
         <activity android:name=".CampaignAddPhotoActivity" />
-        <activity android:name=".BCampaignDetailActivity"></activity>
+        <activity android:name=".BCampaignDetailActivity" />
+        <activity android:name=".ICampaignDetailActivity"></activity>
     </application>
 
 </manifest>

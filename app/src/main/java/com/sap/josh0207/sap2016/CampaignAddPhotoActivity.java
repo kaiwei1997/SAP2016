@@ -157,12 +157,13 @@ public class CampaignAddPhotoActivity extends AppCompatActivity {
     }
 
     public void uploadMood(){
-        mProgress.setMessage("Creating Campaign");
-        mProgress.show();
-
         mood = mDatabase.child(post_id);
 
-
+        if(m1Uri == null & m2Uri==null & m3Uri == null){
+            Toast.makeText(getApplicationContext(),"Must upload at least one picture",Toast.LENGTH_LONG).show();
+        }else if(m1Uri == null){
+            Toast.makeText(getApplicationContext(),"Must upload at least one picture",Toast.LENGTH_LONG).show();
+        }
         if(m1Uri != null) {
             StorageReference moodFilePath1 = mStrorage.child("Campaign").child("Mood").child(m1Uri.getPath());
             moodFilePath1.putFile(m1Uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -204,13 +205,17 @@ public class CampaignAddPhotoActivity extends AppCompatActivity {
                 }
             });
         }
+        if(m1Uri!=null || m2Uri!=null ||m3Uri!=null){
+                mProgress.setMessage("Creating Campaign");
+                mProgress.show();
+                mProgress.dismiss();
+                Toast.makeText(getApplicationContext(), "Upload Successful", Toast.LENGTH_LONG).show();
+                finish();
+                Intent i = new Intent(getApplicationContext(), BrandHomeActivity.class);
+                startActivity(i);
+            }
+        }
 
-        mProgress.dismiss();
-        Toast.makeText(getApplicationContext(),"Upload Successful",Toast.LENGTH_LONG).show();
 
-        finish();
-
-        Intent i = new Intent(getApplicationContext(),BrandHomeActivity.class);
-        startActivity(i);
     }
-}
+
