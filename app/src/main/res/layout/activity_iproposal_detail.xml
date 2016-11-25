@@ -39,24 +39,6 @@
                 android:padding="10dp"/>
 
             <TextView
-                android:id="@+id/inf_fb_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:textColor="#0000ff"
-                android:padding="10dp"/>
-
-            <ImageView
-                android:id="@+id/FB_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp">
-            </ImageView>
-
-            <TextView
                 android:id="@+id/proposal_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,22 +68,10 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Approve"
+                android:text="POST"
                 android:textSize="18dp"
                 android:textColor="#000"
-                android:id="@+id/approve"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Reject"
-                android:textSize="18dp"
-                android:textColor="#000"
-                android:id="@+id/reject"/>
-
-
+                android:id="@+id/post"/>
         </LinearLayout>
     </ScrollView>
-
-
 </RelativeLayout>

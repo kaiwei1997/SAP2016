@@ -60,6 +60,7 @@ public class BrandProposalListFragment extends Fragment {
         list_status.add("All Proposal");
         list_status.add("Pending Proposal");
         list_status.add("Approved Proposal");
+        list_status.add("Reject Proposal");
         list_status.add("Published Proposal");
 
         ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, list_status);
@@ -79,7 +80,7 @@ public class BrandProposalListFragment extends Fragment {
                 mDatabase
         ){
             @Override
-            protected void populateViewHolder(BrandProposalListFragment.ProposalViewHolder viewHolder, Proposal model, final int position) {
+            protected void populateViewHolder(BrandProposalListFragment.ProposalViewHolder viewHolder, final Proposal model, final int position) {
                 final String proposal_id = getRef(position).getKey();
                 s = model.getMerchantID().toString();
                 if (s.equals(Uid)) {
@@ -98,6 +99,7 @@ public class BrandProposalListFragment extends Fragment {
                     public void onClick(View view) {
                         Intent i = new Intent(view.getContext(),BProposalDetailActivity.class);
                         i.putExtra("Proposal_ID",proposal_id);
+                        i.putExtra("FbId",model.getInfluencerID());
                         view.getContext().startActivity(i);
                     }
                 });

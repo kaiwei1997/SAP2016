@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.sap.josh0207.sap2016.fragment.InfCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.InfNotificationsFragment;
+import com.sap.josh0207.sap2016.fragment.InfProposalFragment;
 import com.sap.josh0207.sap2016.fragment.InfSettingsFragment;
 import com.squareup.picasso.Picasso;
 
@@ -51,6 +52,7 @@ public class InfHomeActivity extends AppCompatActivity {
 
     // tags used to attach the fragments
     private static final String TAG_CAMPAIGN = "campaigns";
+    private static final String TAG_PROPOSAL = "proposal";
     private static final String TAG_NOTIFICATIONS = "notifications";
     private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_CAMPAIGN;
@@ -180,6 +182,14 @@ public class InfHomeActivity extends AppCompatActivity {
                         FragmentManager manager_campaign = getSupportFragmentManager();
                         manager_campaign.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).
                                 replace(R.id.content_inf_home,campaign,CURRENT_TAG).commit();
+                        break;
+                    case R.id.nav_InfProposal:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_PROPOSAL;
+                        InfProposalFragment proposal = new InfProposalFragment();
+                        FragmentManager manager_proposal = getSupportFragmentManager();
+                        manager_proposal.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).
+                                replace(R.id.content_inf_home,proposal,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_InfNotifications:
                         navItemIndex = 2;

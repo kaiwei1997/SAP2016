@@ -192,9 +192,12 @@ public class InfCampaignFragment extends Fragment {
             @Override
             protected void populateViewHolder(InfCampaignFragment.CampaignViewHolder viewHolder, Campaign model,int position) {
                 final String post_id = getRef(position).getKey();
-                viewHolder.setCampaignName(model.getCampaignName());
+                final String stat = model.getStatusCode();
+                if(stat.equals("1")) {
+                    viewHolder.setCampaignName(model.getCampaignName());
                     viewHolder.setObjective(model.getObjective());
                     viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
+                }
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
