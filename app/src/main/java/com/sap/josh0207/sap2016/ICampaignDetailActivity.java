@@ -2,6 +2,7 @@ package com.sap.josh0207.sap2016;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,8 +30,9 @@ public class ICampaignDetailActivity extends AppCompatActivity {
     private TextView brandName,campaignName,objective,descrip,tc,getProduct,cont;
     private ImageView brandLogo,m1,m2,m3;
     private Button create,report;
+    private FirebaseAuth mAuth;
     private ProgressDialog mProgress;
-    private String id;
+    private String id,Uid, merchantId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,11 @@ public class ICampaignDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Brief");
+
+        mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser inf = mAuth.getCurrentUser();
+        Uid = inf.getUid().toString();
 
         mProgress = new ProgressDialog(this);
 
@@ -66,7 +75,11 @@ public class ICampaignDetailActivity extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveEdit();
+                Intent i = new Intent(view.getContext(),ProposalPostActivity.class);
+                i.putExtra("ID",id);
+                i.putExtra("Uid",Uid);
+                i.putExtra("Mid",merchantId);
+                view.getContext().startActivity(i);
             }
         });
 
@@ -80,7 +93,7 @@ public class ICampaignDetailActivity extends AppCompatActivity {
         mDatabase.child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String merchantId = (String)dataSnapshot.child("merchant_id").getValue();
+                merchantId = (String)dataSnapshot.child("merchant_id").getValue();
                 mDatabase1.child(merchantId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,10 +152,6 @@ public class ICampaignDetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void SaveEdit(){
-
     }
 
     public void ReportCampaign(){
