@@ -95,7 +95,7 @@ public class InfLoginActivity extends AppCompatActivity {
         // Initialize Facebook Login button
         mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.button_facebook_login);
-        loginButton.setReadPermissions("email", "public_profile","user_friends","user_posts","publish_stream","read_stream");
+        loginButton.setReadPermissions("email", "public_profile","user_friends","user_posts");
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

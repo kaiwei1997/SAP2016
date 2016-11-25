@@ -101,7 +101,9 @@ public class BrandCampaignFragment extends Fragment {
                                viewHolder.setObjective(model.getObjective());
                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                            }else{
-                               viewHolder.mView.setVisibility(View.GONE);
+                                   viewHolder.setCampaignName("NA");
+                                   viewHolder.setObjective("NA");
+                                   viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
                            }
                        }
                    };
@@ -122,7 +124,9 @@ public class BrandCampaignFragment extends Fragment {
                                viewHolder.setObjective(model.getObjective());
                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                            }else{
-                               viewHolder.mView.setVisibility(View.GONE);
+                               viewHolder.setCampaignName("NA");
+                               viewHolder.setObjective("NA");
+                               viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
                            }
                        }
                    };
@@ -143,7 +147,9 @@ public class BrandCampaignFragment extends Fragment {
                                viewHolder.setObjective(model.getObjective());
                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                            }else{
-                               viewHolder.mView.setVisibility(View.GONE);
+                               viewHolder.setCampaignName("NA");
+                               viewHolder.setObjective("NA");
+                               viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
                            }
                        }
                    };
@@ -179,7 +185,9 @@ public class BrandCampaignFragment extends Fragment {
                     viewHolder.setObjective(model.getObjective());
                     viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
                 }else{
-                    viewHolder.mView.setVisibility(View.GONE);
+                    viewHolder.setCampaignName("NA");
+                    viewHolder.setObjective("NA");
+                    viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
                 }
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
@@ -208,17 +216,30 @@ public class BrandCampaignFragment extends Fragment {
         public void setCampaignName(String campaignName){
             campaign_title= (TextView) mView.findViewById(R.id.campaign_title);
             campaign_title.setText (campaignName);
+
+            if(campaign_title.getText()=="NA"){
+                campaign_title.setVisibility(View.GONE);
+            }
         }
 
         public void setObjective (String objective) {
             campaign_obj = (TextView) mView.findViewById(R.id.campaign_desc);
             campaign_obj.setText(objective);
+
+            if(campaign_obj.getText()=="NA"){
+                campaign_obj.setVisibility(View.GONE);
+            }
         }
 
-        public void setHeroImage(Context ctx, String heroImage){
-            heroImageView = (ImageView)mView.findViewById(R.id.campaign_image);
+        public void setHeroImage(Context ctx, String heroImage) {
+            heroImageView = (ImageView) mView.findViewById(R.id.campaign_image);
             Picasso.with(ctx).load(heroImage).into(heroImageView);
+
+            if (heroImage == "null") {
+                heroImageView.setVisibility(View.GONE);
+                mView.setVisibility(View.GONE);
             }
+        }
 
         }
     }

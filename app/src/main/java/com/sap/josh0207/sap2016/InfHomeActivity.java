@@ -103,7 +103,7 @@ public class InfHomeActivity extends AppCompatActivity {
         //set Navigation header Influencer Profile Pic from FB
         user = FirebaseAuth.getInstance().getCurrentUser();
         for(UserInfo profile: user.getProviderData()){
-            //check is it the provider id matches "facebok.com"
+            //check is it the provider id matches "facebook.com"
             if(profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
                 facebookUserId = profile.getUid();
             }
@@ -182,7 +182,7 @@ public class InfHomeActivity extends AppCompatActivity {
                                 replace(R.id.content_inf_home,campaign,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_InfNotifications:
-                        navItemIndex = 1;
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
                         InfNotificationsFragment notifications = new InfNotificationsFragment();
                         FragmentManager manager_notifications = getSupportFragmentManager();
@@ -190,7 +190,7 @@ public class InfHomeActivity extends AppCompatActivity {
                                 android.R.anim.fade_out).replace(R.id.content_inf_home,notifications,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_InfSettings:
-                        navItemIndex = 2;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_SETTINGS;
                         InfSettingsFragment settings = new InfSettingsFragment();
                         FragmentManager manager_settings = getSupportFragmentManager();

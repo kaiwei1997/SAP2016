@@ -3,33 +3,21 @@ package com.sap.josh0207.sap2016;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.ContactsContract;
-import android.provider.Settings;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,11 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.sap.josh0207.sap2016.fragment.BrandCampaignFragment;
 import com.sap.josh0207.sap2016.fragment.BrandNotificationsFragment;
 import com.sap.josh0207.sap2016.fragment.BrandSettingsFragment;
+import com.sap.josh0207.sap2016.fragment.BrandProposalListFragment;
 import com.squareup.picasso.Picasso;
-
-import java.net.URL;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class BrandHomeActivity extends AppCompatActivity {
 
@@ -225,8 +210,17 @@ public class BrandHomeActivity extends AppCompatActivity {
                                 replace(R.id.content_brand__home,campaign,CURRENT_TAG).commit();
                         break;
 
-                    case R.id.nav_BrandNotifications:
+                    case R.id.nav_BrandProposal:
                         navItemIndex = 1;
+                        CURRENT_TAG = TAG_CAMPAIGN;
+                        BrandProposalListFragment proposal = new BrandProposalListFragment();
+                        FragmentManager manager_proposal = getSupportFragmentManager();
+                        manager_proposal.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).
+                                replace(R.id.content_brand__home,proposal,CURRENT_TAG).commit();
+                        break;
+
+                    case R.id.nav_BrandNotifications:
+                        navItemIndex = 2;
                         CURRENT_TAG = TAG_NOTIFICATIONS;
                         BrandNotificationsFragment notifications = new BrandNotificationsFragment();
                         FragmentManager manager_notifications = getSupportFragmentManager();
@@ -234,7 +228,7 @@ public class BrandHomeActivity extends AppCompatActivity {
                                 android.R.anim.fade_out).replace(R.id.content_brand__home,notifications,CURRENT_TAG).commit();
                         break;
                     case R.id.nav_BrandSettings:
-                        navItemIndex = 2;
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_SETTINGS;
                         BrandSettingsFragment settings = new BrandSettingsFragment();
                         FragmentManager manager_settings = getSupportFragmentManager();

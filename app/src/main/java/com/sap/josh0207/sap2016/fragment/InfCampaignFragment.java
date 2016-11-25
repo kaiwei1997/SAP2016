@@ -91,8 +91,10 @@ public class InfCampaignFragment extends Fragment {
                                 viewHolder.setCampaignName(model.getCampaignName());
                                 viewHolder.setObjective(model.getObjective());
                                 viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
-                            }else {
-                                viewHolder.mView.setVisibility(View.GONE);
+                            }else{
+                                viewHolder.setCampaignName("NA");
+                                viewHolder.setObjective("NA");
+                                viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
                             }
                         }
                     };
@@ -111,10 +113,13 @@ public class InfCampaignFragment extends Fragment {
                                 viewHolder.setCampaignName(model.getCampaignName());
                                 viewHolder.setObjective(model.getObjective());
                                 viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
-                            }else {
-                                viewHolder.mView.setVisibility(View.GONE);
+                            }else{
+                                viewHolder.setCampaignName("NA");
+                                viewHolder.setObjective("NA");
+                                viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
                             }
                         }
+
                     };
                     mCampaignList.setAdapter(firebaseRecyclerAdapter);
                 }else if(i ==3){
@@ -131,8 +136,32 @@ public class InfCampaignFragment extends Fragment {
                                 viewHolder.setCampaignName(model.getCampaignName());
                                 viewHolder.setObjective(model.getObjective());
                                 viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
-                            }else {
-                                viewHolder.mView.setVisibility(View.GONE);
+                            }else{
+                                viewHolder.setCampaignName("NA");
+                                viewHolder.setObjective("NA");
+                                viewHolder.setHeroImage(getActivity().getApplicationContext(),"null");
+                            }
+                        }
+                    };
+                    mCampaignList.setAdapter(firebaseRecyclerAdapter);
+                }else if(i ==4) {
+                    FirebaseRecyclerAdapter<Campaign, InfCampaignFragment.CampaignViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Campaign, InfCampaignFragment.CampaignViewHolder>(
+                            Campaign.class,
+                            R.layout.campaign_row,
+                            InfCampaignFragment.CampaignViewHolder.class,
+                            mDatabase
+                    ) {
+                        @Override
+                        protected void populateViewHolder(InfCampaignFragment.CampaignViewHolder viewHolder, Campaign model, int position) {
+                            categoryS = model.getCategory().toString();
+                            if (categoryS.equals("Business,Finance & Insurance")) {
+                                viewHolder.setCampaignName(model.getCampaignName());
+                                viewHolder.setObjective(model.getObjective());
+                                viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());
+                            } else {
+                                viewHolder.setCampaignName("NA");
+                                viewHolder.setObjective("NA");
+                                viewHolder.setHeroImage(getActivity().getApplicationContext(), "null");
                             }
                         }
                     };
@@ -146,7 +175,7 @@ public class InfCampaignFragment extends Fragment {
             }
         });
 
-
+        onStart();
 
         return view;
     }
@@ -193,16 +222,28 @@ public class InfCampaignFragment extends Fragment {
         public void setCampaignName(String campaignName){
             campaign_title= (TextView) mView.findViewById(R.id.campaign_title);
             campaign_title.setText (campaignName);
+
+            if(campaign_title.getText()=="NA"){
+                campaign_title.setVisibility(View.GONE);
+            }
         }
 
         public void setObjective (String objective) {
             campaign_obj = (TextView) mView.findViewById(R.id.campaign_desc);
             campaign_obj.setText(objective);
+
+            if(campaign_obj.getText()=="NA"){
+                campaign_obj.setVisibility(View.GONE);
+            }
         }
 
         public void setHeroImage(Context ctx, String heroImage){
             heroImageView = (ImageView)mView.findViewById(R.id.campaign_image);
             Picasso.with(ctx).load(heroImage).into(heroImageView);
+
+            if(heroImage.equals("Null")){
+                heroImageView.setVisibility(View.GONE);
+            }
         }
 
     }

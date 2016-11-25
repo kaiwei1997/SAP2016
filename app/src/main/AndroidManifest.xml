@@ -74,6 +74,7 @@
         <activity android:name=".BCampaignDetailActivity" />
         <activity android:name=".ICampaignDetailActivity" />
         <activity android:name=".ProposalPostActivity" />
+        <activity android:name=".BProposalDetailActivity"></activity>
     </application>
 
 </manifest>

@@ -19,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -33,13 +36,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ProposalPostActivity extends AppCompatActivity {
-    private String uid, mid, cid,content1,price1,proposalImageDownload;
+    private String uid="", mid, cid,content1,price1,proposalImageDownload;
     private EditText content,price;
     private ImageButton proposal;
     private Button submit;
     private DatabaseReference mDatabase;
     private StorageReference mImage;
     private ProgressDialog mProgress;
+    private FirebaseUser user;
     private static final int REQUEST_CAMERA = 1;
     private static final int GALLERY_REQUEST = 2;
 
@@ -48,8 +52,6 @@ public class ProposalPostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proposal_post);
-
-        uid = getIntent().getStringExtra("Uid");
         mid = getIntent().getStringExtra("Mid");
         cid = getIntent().getStringExtra("ID");
 
@@ -167,6 +169,13 @@ public class ProposalPostActivity extends AppCompatActivity {
              });
              newProposal.child("campaignID").setValue(cid);
              newProposal.child("merchantID").setValue(mid);
+             user = FirebaseAuth.getInstance().getCurrentUser();
+             for(UserInfo profile: user.getProviderData()){
+                 //check is it the provider id matches "facebook.com"
+                 if(profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
+                     uid = profile.getUid();
+                 }
+             }
              newProposal.child("influencerID").setValue(uid);
              newProposal.child("content").setValue(content1);
              newProposal.child("price").setValue(price1);
@@ -182,6 +191,7 @@ public class ProposalPostActivity extends AppCompatActivity {
                      finish();
                  }
              });
+             builder.show();
          }
     }
 }

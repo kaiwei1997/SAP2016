@@ -5,14 +5,14 @@ package com.sap.josh0207.sap2016;
  */
 
 public class Proposal {
-    private String campaignID, merchantID, influencerID, content, price, photoUrl;
+    private String campaignID, merchantID, influencerID, content, price, photoURL;
 
     public Proposal(){
 
     }
 
-    public Proposal(String photoUrl, String campaignID, String merchantID, String influencerID, String content, String price) {
-        this.photoUrl = photoUrl;
+    public Proposal(String photoURL, String campaignID, String merchantID, String influencerID, String content, String price) {
+        this.photoURL = photoURL;
         this.campaignID = campaignID;
         this.merchantID = merchantID;
         this.influencerID = influencerID;
@@ -60,12 +60,12 @@ public class Proposal {
         this.price = price;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getPhotoURL() {
+        return photoURL;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhotoURL(String photoUrl) {
+        this.photoURL = photoUrl;
     }
 }
 
