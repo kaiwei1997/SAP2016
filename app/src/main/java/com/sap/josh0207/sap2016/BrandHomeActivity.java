@@ -212,7 +212,7 @@ public class BrandHomeActivity extends AppCompatActivity {
 
                     case R.id.nav_BrandProposal:
                         navItemIndex = 1;
-                        CURRENT_TAG = TAG_CAMPAIGN;
+                        CURRENT_TAG = TAG_PROPOSAL;
                         BrandProposalListFragment proposal = new BrandProposalListFragment();
                         FragmentManager manager_proposal = getSupportFragmentManager();
                         manager_proposal.beginTransaction().setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out).

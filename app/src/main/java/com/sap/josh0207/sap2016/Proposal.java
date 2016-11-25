@@ -5,19 +5,21 @@ package com.sap.josh0207.sap2016;
  */
 
 public class Proposal {
-    private String campaignID, merchantID, influencerID, content, price, photoURL;
+    private String campaignID, merchantID, influencerID, content, price, photoURL,FB_name,statusCode;
 
     public Proposal(){
 
     }
 
-    public Proposal(String photoURL, String campaignID, String merchantID, String influencerID, String content, String price) {
+    public Proposal(String photoURL, String campaignID, String merchantID, String influencerID, String content, String price,String FB_name,String statusCode) {
         this.photoURL = photoURL;
         this.campaignID = campaignID;
         this.merchantID = merchantID;
         this.influencerID = influencerID;
         this.content = content;
         this.price = price;
+        this.FB_name = FB_name;
+        this.statusCode = statusCode;
     }
 
     public String getCampaignID() {
@@ -63,9 +65,22 @@ public class Proposal {
     public String getPhotoURL() {
         return photoURL;
     }
-
     public void setPhotoURL(String photoUrl) {
         this.photoURL = photoUrl;
+    }
+
+    public String getFB_name() {
+        return FB_name;
+    }
+    public void setFB_name(String FB_name) {
+        this.FB_name = FB_name;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
     }
 }
 

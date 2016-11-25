@@ -36,7 +36,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ProposalPostActivity extends AppCompatActivity {
-    private String uid="", mid, cid,content1,price1,proposalImageDownload;
+    private String uid="",name, mid, cid,content1,price1,proposalImageDownload;
     private EditText content,price;
     private ImageButton proposal;
     private Button submit;
@@ -174,9 +174,11 @@ public class ProposalPostActivity extends AppCompatActivity {
                  //check is it the provider id matches "facebook.com"
                  if(profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
                      uid = profile.getUid();
+                     name = profile.getDisplayName();
                  }
              }
              newProposal.child("influencerID").setValue(uid);
+             newProposal.child("FB_name").setValue(name);
              newProposal.child("content").setValue(content1);
              newProposal.child("price").setValue(price1);
              newProposal.child("statusCode").setValue("1");

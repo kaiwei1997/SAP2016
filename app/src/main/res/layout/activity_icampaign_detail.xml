@@ -81,6 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Desc"
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:enabled="true" />
 
             <TextView
@@ -95,6 +97,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/Content"
                 android:enabled="true" />
 
@@ -138,6 +142,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/et_tc"
                 android:enabled="true" />
 
@@ -153,6 +159,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="16dp"
                 android:id="@+id/et_getProduct"
                 android:enabled="true" />
 

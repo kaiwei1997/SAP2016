@@ -26,6 +26,7 @@
     <!-- Toolbar titles when navigation menu item is selected -->
     <string-array name="nav_item_activity_titles">
         <item>My Campaign</item>
+        <item>Proposal</item>
         <item>Notifications</item>
         <item>Settings</item>
         <item>Add Campaign</item>

@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sap.josh0207.sap2016.BCampaignDetailActivity;
+import com.sap.josh0207.sap2016.BProposalDetailActivity;
 import com.sap.josh0207.sap2016.Campaign;
 import com.sap.josh0207.sap2016.Proposal;
 import com.sap.josh0207.sap2016.R;
@@ -78,16 +79,28 @@ public class BrandProposalListFragment extends Fragment {
                 mDatabase
         ){
             @Override
-            protected void populateViewHolder(BrandProposalListFragment.ProposalViewHolder viewHolder, Proposal model, int position) {
+            protected void populateViewHolder(BrandProposalListFragment.ProposalViewHolder viewHolder, Proposal model, final int position) {
+                final String proposal_id = getRef(position).getKey();
                 s = model.getMerchantID().toString();
                 if (s.equals(Uid)) {
-                    model.getInfluencerID();
+                    viewHolder.setStatus(model.getStatusCode());
+                    viewHolder.setFBImage(getActivity().getApplicationContext(),model.getInfluencerID());
+                    viewHolder.setFBName(model.getFB_name());
                     viewHolder.setPrice(model.getPrice());
                     viewHolder.setContent(model.getContent());
                     viewHolder.setProposalImage(getActivity().getApplicationContext(),model.getPhotoURL());
                 }else{
                     viewHolder.mView.setVisibility(View.GONE);
                 }
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(view.getContext(),BProposalDetailActivity.class);
+                        i.putExtra("Proposal_ID",proposal_id);
+                        view.getContext().startActivity(i);
+                    }
+                });
 
             }
         };
@@ -97,17 +110,27 @@ public class BrandProposalListFragment extends Fragment {
     public static class ProposalViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
-        TextView link,proposal_Price,cont;
-        ImageView proposalImageView;
+        TextView tvstatus,proposal_Price,cont,FBName;
+        ImageView proposalImageView, FBImage;
 
         public ProposalViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public void setPrice(String campaignName){
+        public void setFBImage(Context ctx, String Url){
+            FBImage = (ImageView)mView.findViewById(R.id.fb_image);
+            Picasso.with(ctx).load("https://graph.facebook.com/" + Url + "/picture?height=800").into(FBImage);
+        }
+
+        public void setFBName(String name){
+            FBName = (TextView)mView.findViewById(R.id.name);
+            FBName.setText(name);
+        }
+
+        public void setPrice(String Price){
             proposal_Price= (TextView) mView.findViewById(R.id.proposal_price);
-            proposal_Price.setText (campaignName);
+            proposal_Price.setText ("RM "+Price);
         }
 
         public void setContent (String content) {
@@ -118,6 +141,17 @@ public class BrandProposalListFragment extends Fragment {
         public void setProposalImage(Context ctx, String proposalImage){
             proposalImageView = (ImageView)mView.findViewById(R.id.proposal_image);
             Picasso.with(ctx).load(proposalImage).into(proposalImageView);
+        }
+
+        public void setStatus(String status){
+            tvstatus = (TextView)mView.findViewById(R.id.tv_status);
+            if(status.equals("1")) {
+                tvstatus.setText("Pending");
+            }else if(status.equals("2")){
+                tvstatus.setText("Approve");
+            }else if(status.equals("3")) {
+                tvstatus.setText("Reject");
+            }
         }
 
     }
