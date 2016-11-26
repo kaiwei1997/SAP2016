@@ -253,6 +253,7 @@ public class InfCampaignFragment extends Fragment {
 
             if(heroImage.equals("Null")){
                 heroImageView.setVisibility(View.GONE);
+                mView.setVisibility(View.GONE);
             }
         }
 

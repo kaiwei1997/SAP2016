@@ -48,6 +48,8 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-vector-drawable:25.0.1'
+    compile 'com.paypal.sdk:rest-api-sdk:+'
+    compile 'com.paypal.sdk:paypal-android-sdk:2.15.1'
     testCompile 'junit:junit:4.12'
 }
 
