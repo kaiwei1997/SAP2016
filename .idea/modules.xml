@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/PayPalAndroidSDK-2.15.1/PayPalAndroidSDK-2.15.1.iml" filepath="$PROJECT_DIR$/PayPalAndroidSDK-2.15.1/PayPalAndroidSDK-2.15.1.iml" />
       <module fileurl="file://$PROJECT_DIR$/SAP2016.iml" filepath="$PROJECT_DIR$/SAP2016.iml" />
       <module fileurl="file://$PROJECT_DIR$/account-kit-sdk-4.17.0/account-kit-sdk-4.17.0.iml" filepath="$PROJECT_DIR$/account-kit-sdk-4.17.0/account-kit-sdk-4.17.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

@@ -65,10 +65,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".BrandDetailActivity" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings" />
         <activity android:name=".AddCampaignActivity" />
         <activity android:name=".CampaignAddPhotoActivity" />
         <activity android:name=".BCampaignDetailActivity" />
@@ -76,6 +72,11 @@
         <activity android:name=".ProposalPostActivity" />
         <activity android:name=".BProposalDetailActivity" />
         <activity android:name=".IProposalDetailActivity"></activity>
+
     </application>
+
+    <provider android:authorities="com.facebook.app.FacebookContentProvider677246852429690"
+        android:name="com.facebook.FacebookContentProvider"
+        android:exported="true" />
 
 </manifest>

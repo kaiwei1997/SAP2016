@@ -68,7 +68,6 @@ public class BrandCampaignFragment extends Fragment {
 
         list_status = new ArrayList<String>();
         list_status.add("All Campaign");
-        list_status.add("Expired Campaign");
         list_status.add("Removed Campaign");
         list_status.add("Suspend Campaign");
 
@@ -108,7 +107,7 @@ public class BrandCampaignFragment extends Fragment {
                        }
                    };
                    mCampaignList.setAdapter(firebaseRecyclerAdapter);
-               }else if (i == 2){
+               }else if (i == 1){
                    FirebaseRecyclerAdapter<Campaign,CampaignViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Campaign,CampaignViewHolder>(
                            Campaign.class,
                            R.layout.campaign_row,
@@ -131,7 +130,7 @@ public class BrandCampaignFragment extends Fragment {
                        }
                    };
                    mCampaignList.setAdapter(firebaseRecyclerAdapter);
-               }else  if (i == 3){
+               }else  if (i == 2){
                    FirebaseRecyclerAdapter<Campaign,CampaignViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Campaign,CampaignViewHolder>(
                            Campaign.class,
                            R.layout.campaign_row,

@@ -149,6 +149,8 @@ public class InfProposalFragment extends Fragment {
                     tvstatus.setText("Approve");
                 }else if(status.equals("3")) {
                     tvstatus.setText("Reject");
+                }else if(status.equals("4")) {
+                    tvstatus.setText("Published");
                 }
             }
     }

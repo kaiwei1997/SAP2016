@@ -39,7 +39,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.sap.josh0207.sap2016.AddCampaignActivity;
-import com.sap.josh0207.sap2016.BrandDetailActivity;
 import com.sap.josh0207.sap2016.InfLoginActivity;
 import com.sap.josh0207.sap2016.R;
 import com.squareup.picasso.Picasso;
@@ -105,39 +104,6 @@ public class BrandSettingsFragment extends Fragment {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
-        //ListView
-        ListView listView = (ListView)view.findViewById(R.id.setting_listView);
-
-        String[] choice = new String[]{"Set Profile Detail","Add Payment Detail"};
-
-        ArrayList<String> choiceList = new ArrayList<String>();
-        choiceList.addAll(Arrays.asList(choice));
-
-        listAdapter = new ArrayAdapter<String>(getActivity(),R.layout.simple_row,choiceList);
-
-        listView.setAdapter(listAdapter);
-
-        //set onClickListener for list view
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Intent i = new Intent(getActivity().getApplicationContext(), BrandDetailActivity.class);
-                        startActivity(i);
-                        break;
-
-                    case 1:
-
-                        break;
-
-                    default:
-
-                        break;
-                }
             }
         });
 

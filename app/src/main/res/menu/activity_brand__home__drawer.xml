@@ -8,6 +8,7 @@
             android:title="@string/nav_MyCampaign" />
         <item
             android:id="@+id/nav_BrandProposal"
+            android:icon="@drawable/ic_proposal"
             android:title="@string/nav_Proposal" />
         <item
             android:id="@+id/nav_BrandNotifications"

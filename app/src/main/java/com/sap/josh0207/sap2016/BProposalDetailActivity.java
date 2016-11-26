@@ -46,7 +46,7 @@ public class BProposalDetailActivity extends AppCompatActivity {
         pId = getIntent().getStringExtra("Proposal_ID");
         fbid = getIntent().getStringExtra("FbId");
 
-                fbLink = (TextView)findViewById(R.id.inf_fb_id);
+        fbLink = (TextView)findViewById(R.id.inf_fb_id);
         Price =(TextView)findViewById(R.id.proposal_price);
         content = (TextView)findViewById(R.id.proposal_content);
         img = (ImageView)findViewById(R.id.proposal_image);

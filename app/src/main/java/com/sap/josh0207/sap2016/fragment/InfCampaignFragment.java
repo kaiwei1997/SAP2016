@@ -26,7 +26,9 @@ import com.sap.josh0207.sap2016.ICampaignDetailActivity;
 import com.sap.josh0207.sap2016.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class InfCampaignFragment extends Fragment {
@@ -193,7 +195,12 @@ public class InfCampaignFragment extends Fragment {
             protected void populateViewHolder(InfCampaignFragment.CampaignViewHolder viewHolder, Campaign model,int position) {
                 final String post_id = getRef(position).getKey();
                 final String stat = model.getStatusCode();
-                if(stat.equals("1")) {
+                final String ex = model.getExpired();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                Calendar c = Calendar.getInstance();
+                String formatDate = df.format(c.getTimeInMillis());
+
+                if(stat.equals("1")&& !formatDate.equals(ex)) {
                     viewHolder.setCampaignName(model.getCampaignName());
                     viewHolder.setObjective(model.getObjective());
                     viewHolder.setHeroImage(getActivity().getApplicationContext(), model.getHero_image());

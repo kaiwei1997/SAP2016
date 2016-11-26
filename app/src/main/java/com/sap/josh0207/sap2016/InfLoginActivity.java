@@ -18,6 +18,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -53,11 +54,13 @@ public class InfLoginActivity extends AppCompatActivity {
 
     private ProgressDialog mProgress;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_inf_login);
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         mProgress = new ProgressDialog(this);
 
@@ -78,9 +81,12 @@ public class InfLoginActivity extends AppCompatActivity {
                     for(UserInfo profile: user.getProviderData()){
                         //check is it the provider id matches "facebok.com"
                         if(profile.getProviderId().equals(getString(R.string.facebook_provider_id))){
+                            mProgress.setMessage("Login...");
+                            mProgress.show();
                             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                             Intent i = new Intent(getApplicationContext(),InfHomeActivity.class);
                             startActivity(i);
+                            mProgress.dismiss();
                         }
                     }
                 } else {
@@ -101,6 +107,8 @@ public class InfLoginActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 Log.d(TAG, "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
+                Profile profile = Profile.getCurrentProfile();
+
             }
 
             @Override

@@ -22,7 +22,6 @@ import com.facebook.HttpMethod;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.sap.josh0207.sap2016.BrandDetailActivity;
 import com.sap.josh0207.sap2016.R;
 import com.squareup.picasso.Picasso;
 
@@ -52,7 +51,7 @@ public class InfSettingsFragment extends Fragment {
 
         //ListView
         ListView listView = (ListView)view.findViewById(R.id.inf_setting_listView);
-        String[] choice = new String[]{"Rate Card","My Profile","Payment Detail","Select my interests"};
+        String[] choice = new String[]{"My Profile","Payment Detail"};
 
         ArrayList<String> choiceList = new ArrayList<String>();
         choiceList.addAll(Arrays.asList(choice));
@@ -72,14 +71,6 @@ public class InfSettingsFragment extends Fragment {
                         break;
 
                     case 1:
-
-                        break;
-
-                    case 2:
-
-                        break;
-
-                    case 3:
 
                         break;
 
